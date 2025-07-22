@@ -14,6 +14,7 @@ import type { DrawerContentComponentProps } from '@react-navigation/drawer';
 import { Ionicons } from '@expo/vector-icons';
 import { darkTheme, lightTheme } from './app/constants/theme';
 import { WeatherScreen } from './app/screens/WeatherScreen';
+import { SettingsScreen } from './app/screens/SettingsScreen';
 import { SettingsProvider } from './app/contexts/SettingsContext';
 
 // const Drawer = createDrawerNavigator();
@@ -66,14 +67,14 @@ const TabNavigator = () => {
                 options={{
                     title: 'Storm Documentation',
                 }}
-            />
+            /> */}
             <Tab.Screen
                 name="Settings"
                 component={SettingsScreen}
                 options={{
                     title: 'Settings',
                 }}
-            /> */}
+            />
         </Tab.Navigator>
     );
 };
