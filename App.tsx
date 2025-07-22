@@ -13,7 +13,6 @@ import { darkTheme, lightTheme } from '@/src/constants/theme';
 import { SettingsProvider } from '@/src/contexts/SettingsContext';
 
 import { CaptureStormScreen } from '@/src/screens/CaptureStormScreen';
-import { SettingsScreen } from '@/src/screens/SettingsScreen';
 import { StormDetailScreen } from '@/src/screens/StormDetailScreen';
 import { StormDocumentationScreen } from '@/src/screens/StormDocumentationScreen';
 import { WeatherScreen } from '@/src/screens/WeatherScreen';
@@ -76,7 +75,7 @@ const TabNavigator = () => {
                     title: 'Weather',
                 }}
             />
-            <Tab.Screen
+            {/* <Tab.Screen
                 name="Storms"
                 component={StormStack}
                 options={{
@@ -89,7 +88,7 @@ const TabNavigator = () => {
                 options={{
                     title: 'Settings',
                 }}
-            />
+            /> */}
         </Tab.Navigator>
     );
 };
