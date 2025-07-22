@@ -16,11 +16,35 @@ import { darkTheme, lightTheme } from './app/constants/theme';
 import { WeatherScreen } from './app/screens/WeatherScreen';
 import { SettingsScreen } from './app/screens/SettingsScreen';
 import { SettingsProvider } from './app/contexts/SettingsContext';
+import { CaptureStormScreen } from './app/screens/CaptureStormScreen';
+import { StormDocumentationScreen } from './app/screens/StormDocumentationScreen';
+import { StormDetailScreen } from './app/screens/StormDetailScreen';
+import { StormDocumentation } from './app/types';
+import type { StackScreenProps } from '@react-navigation/stack';
 
+type StormStackParamList = {
+    StormList: undefined;
+    CaptureStorm: undefined;
+    StormDetail: { storm: StormDocumentation };
+  };
 // const Drawer = createDrawerNavigator();
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<StormStackParamList>();
 const Tab = createBottomTabNavigator();
 
+const StormStack = () => {
+    return (
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        <Stack.Screen name="StormList" component={StormDocumentationScreen} />
+        <Stack.Screen name="CaptureStorm" component={CaptureStormScreen} />
+        <Stack.Screen name="StormDetail" component={StormDetailScreen} />
+      </Stack.Navigator>
+    );
+  };
+  
 
 const TabNavigator = () => {
     const colorScheme = useColorScheme();
@@ -61,13 +85,13 @@ const TabNavigator = () => {
                     title: 'Weather',
                 }}
             />
-            {/* <Tab.Screen
+            <Tab.Screen
                 name="Storms"
                 component={StormStack}
                 options={{
                     title: 'Storm Documentation',
                 }}
-            /> */}
+            />
             <Tab.Screen
                 name="Settings"
                 component={SettingsScreen}

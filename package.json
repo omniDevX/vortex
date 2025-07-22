@@ -32,7 +32,8 @@
     "expo-linear-gradient": "~14.1.5",
     "expo-image-picker": "~16.1.4",
     "expo-sqlite": "~15.2.14",
-    "expo-location": "~18.1.6"
+    "expo-location": "~18.1.6",
+    "@react-native-picker/picker": "2.11.1"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
