@@ -83,4 +83,11 @@ export interface AppTheme {
 export interface NavigationProps {
     navigation: any;
     route: any;
-} 
+}
+
+// Stack param list for storm-related navigation
+export type StormStackParamList = {
+  StormList: undefined;
+  CaptureStorm: undefined;
+  StormDetail: { storm: StormDocumentation };
+}; 

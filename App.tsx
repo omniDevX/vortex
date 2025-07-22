@@ -17,9 +17,10 @@ import { SettingsScreen } from '@/src/screens/SettingsScreen';
 import { StormDetailScreen } from '@/src/screens/StormDetailScreen';
 import { StormDocumentationScreen } from '@/src/screens/StormDocumentationScreen';
 import { WeatherScreen } from '@/src/screens/WeatherScreen';
+import { StormStackParamList } from '@/src/types';
 
 const Tab = createBottomTabNavigator();
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<StormStackParamList>();
 
 const StormStack = () => {
     return (

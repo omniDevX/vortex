@@ -1,40 +1,21 @@
+import { Ionicons } from '@expo/vector-icons';
+import { StackScreenProps } from '@react-navigation/stack';
 import React from 'react';
 import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  Image,
-  TouchableOpacity,
+    Image,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    useColorScheme,
+    View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Ionicons } from '@expo/vector-icons';
-import { lightTheme, darkTheme } from '../constants/theme';
-import { useColorScheme } from 'react-native';
-import { StormDocumentation } from '../types';
-import { formatDate, getStormTypeIcon, getStormTypeColor } from '../utils/helpers';
-import {
-  formatTemperature,
-  formatWindSpeed,
-  formatPressure,
-  formatHumidity,
-  formatVisibility,
-  getWindDirection,
-} from '../utils/helpers';
+import { darkTheme, lightTheme } from '../constants/theme';
+import { StormStackParamList } from '../types';
+import { formatDate, formatHumidity, formatPressure, formatTemperature, formatVisibility, formatWindSpeed, getStormTypeIcon, getWindDirection } from '../utils/helpers';
 
-interface StormDetailScreenProps {
-  navigation: any;
-  route: {
-    params: {
-      storm: StormDocumentation;
-    };
-  };
-}
-
-export const StormDetailScreen: React.FC<StormDetailScreenProps> = ({ 
-  navigation, 
-  route 
-}) => {
+export const StormDetailScreen: React.FC<StackScreenProps<StormStackParamList, 'StormDetail'>> = ({ navigation, route }) => {
   const { storm } = route.params;
   const colorScheme = useColorScheme();
   const theme = colorScheme === 'dark' ? 'dark' : 'light';

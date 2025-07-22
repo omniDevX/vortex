@@ -1,34 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  TextInput,
-  Image,
-  Alert,
-  ActivityIndicator,
-} from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
-import { lightTheme, darkTheme } from '../constants/theme';
-import { useColorScheme } from 'react-native';
-import { StormType, StormDocumentation, WeatherData, Location } from '../types';
+import { StackScreenProps } from '@react-navigation/stack';
+import React, { useEffect, useState } from 'react';
+import {
+    ActivityIndicator,
+    Alert,
+    Image,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    useColorScheme,
+    View,
+} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { darkTheme, lightTheme } from '../constants/theme';
+import { useStormDocumentation } from '../hooks/useStormDocumentation';
 import { cameraService } from '../services/camera';
 import { locationService } from '../services/location';
 import { weatherService } from '../services/weather';
-import { useStormDocumentation } from '../hooks/useStormDocumentation';
+import { Location, StormDocumentation, StormStackParamList, StormType, WeatherData } from '../types';
 import { generateId } from '../utils/helpers';
 
-interface CaptureStormScreenProps {
-  navigation: any;
-}
-
-export const CaptureStormScreen: React.FC<CaptureStormScreenProps> = ({ 
-  navigation 
-}) => {
+export const CaptureStormScreen: React.FC<StackScreenProps<StormStackParamList, 'CaptureStorm'>> = ({ navigation }) => {
   const colorScheme = useColorScheme();
   const theme = colorScheme === 'dark' ? 'dark' : 'light';
   const currentTheme = theme === 'dark' ? darkTheme : lightTheme;
