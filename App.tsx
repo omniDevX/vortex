@@ -3,82 +3,94 @@ import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Linking, Share, View, Text } from 'react-native';
+import { Linking, Share, View, Text, useColorScheme, StatusBar   } from 'react-native';
 import HomeScreen from './app/screens/HomeScreen';
 import AlbumDetailScreen from './app/screens/AlbumDetailScreen';
 import Constants from 'expo-constants';
 import "./global.css";
 import type { DrawerContentComponentProps } from '@react-navigation/drawer';
+import { Ionicons } from '@expo/vector-icons';
+import { darkTheme, lightTheme } from './app/constants/theme';
+import { WeatherScreen } from './app/screens/WeatherScreen';
+import { SettingsProvider } from './app/contexts/SettingsContext';
 
-const Drawer = createDrawerNavigator();
+// const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
 
-function ContactScreen({ navigation }: { navigation: any }) {
-    React.useEffect(() => {
-        Linking.openURL('mailto:aiautoinvoicing@gmail.com');
-        navigation.navigate('My Gallery');
-    }, []);
-    return null;
-}
-function RateMeScreen({ navigation }: { navigation: any }) {
-    React.useEffect(() => {
-        Linking.openURL('market://details?id=com.aixpertlab.GallerySlideshow');
-        navigation.navigate('My Gallery');
-    }, []);
-    return null;
-}
-function ShareScreen({ navigation }: { navigation: any }) {
-    React.useEffect(() => {
-        Share.share({ message: 'Check out My Gallery! https://play.google.com/store/apps/details?id=com.aixpertlab.GallerySlideshow' });
-        navigation.navigate('My Gallery');
-    }, []);
-    return null;
-}
-function BuyMeACoffeeScreen({ navigation }: { navigation: any }) {
-    React.useEffect(() => {
-        Linking.openURL('https://ko-fi.com/aiautoinvoicing');
-        navigation.navigate('My Gallery');
-    }, []);
-    return null;
-}
 
-function CustomDrawerContent(props: DrawerContentComponentProps) {
-    const version = (Constants.manifest as any)?.version || Constants.expoConfig?.version || 'Unknown';
+const TabNavigator = () => {
+    const colorScheme = useColorScheme();
+    const theme = colorScheme === 'dark' ? 'dark' : 'light';
+    const currentTheme = theme === 'dark' ? darkTheme : lightTheme;
+
     return (
-        <DrawerContentScrollView {...props} contentContainerStyle={{ flex: 1, justifyContent: 'space-between' }}>
-            <View>
-                <DrawerItemList {...props} />
-            </View>
-            <View style={{ padding: 16, borderTopWidth: 1, borderColor: '#eee' }}>
-                <Text style={{ textAlign: 'center', color: '#888' }}>Version {version}</Text>
-            </View>
-        </DrawerContentScrollView>
-    );
-}
+        <Tab.Navigator
+            screenOptions={({ route }) => ({
+                tabBarIcon: ({ focused, color, size }) => {
+                    let iconName: keyof typeof Ionicons.glyphMap;
 
-function DrawerNavigator() {
-    return (
-        <Drawer.Navigator initialRouteName="My Gallery" drawerContent={props => <CustomDrawerContent {...props} />}>
-            <Drawer.Screen name="My Gallery" component={HomeScreen} />
-            <Drawer.Screen name="Contact" component={ContactScreen} />
-            <Drawer.Screen name="Rate Me" component={RateMeScreen} />
-            <Drawer.Screen name="Share" component={ShareScreen} />
-            <Drawer.Screen name="Buy Me a Coffee" component={BuyMeACoffeeScreen} />
-        </Drawer.Navigator>
+                    if (route.name === 'Weather') {
+                        iconName = focused ? 'partly-sunny' : 'partly-sunny-outline';
+                    } else if (route.name === 'Storms') {
+                        iconName = focused ? 'thunderstorm' : 'thunderstorm-outline';
+                    } else if (route.name === 'Settings') {
+                        iconName = focused ? 'settings' : 'settings-outline';
+                    } else {
+                        iconName = 'help-outline';
+                    }
+
+                    return <Ionicons name={iconName} size={size} color={color} />;
+                },
+                tabBarActiveTintColor: currentTheme.colors.primary,
+                tabBarInactiveTintColor: currentTheme.colors.textSecondary,
+                tabBarStyle: {
+                    backgroundColor: currentTheme.colors.surface,
+                    borderTopColor: currentTheme.colors.border,
+                },
+                headerShown: false,
+            })}
+        >
+            <Tab.Screen
+                name="Weather"
+                component={WeatherScreen}
+                options={{
+                    title: 'Weather',
+                }}
+            />
+            {/* <Tab.Screen
+                name="Storms"
+                component={StormStack}
+                options={{
+                    title: 'Storm Documentation',
+                }}
+            />
+            <Tab.Screen
+                name="Settings"
+                component={SettingsScreen}
+                options={{
+                    title: 'Settings',
+                }}
+            /> */}
+        </Tab.Navigator>
     );
-}
+};
 
 export default function App() {
+    const colorScheme = useColorScheme();
+    const theme = colorScheme === 'dark' ? 'dark' : 'light';
+    const currentTheme = theme === 'dark' ? darkTheme : lightTheme;
+
     return (
-        <SafeAreaProvider>
-            <NavigationContainer>
-                <Stack.Navigator screenOptions={{ headerShown: false }}>
-                    <Stack.Screen name="Root" component={DrawerNavigator} />
-                    <Stack.Screen name="AlbumDetail" component={AlbumDetailScreen} options={{ headerShown: false }} />
-                </Stack.Navigator>
-            </NavigationContainer>
-        </SafeAreaProvider>
+        <SettingsProvider>
+            <SafeAreaProvider>
+                <NavigationContainer>
+                    <StatusBar barStyle={theme === 'dark' ? 'light-content' : 'dark-content'} />
+                    <TabNavigator />
+                </NavigationContainer>
+            </SafeAreaProvider>
+        </SettingsProvider>
     );
 }
-

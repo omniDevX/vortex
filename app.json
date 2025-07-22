@@ -1,40 +1,43 @@
 {
-    "expo": {
-        "name": "Storm Chaser",
-        "slug": "storm-chaser",
-        "version": "2.53.7.10",
-        "orientation": "portrait",
-        "icon": "./assets/icon.png",
-        "scheme": "GallerySlideshow",
-        "userInterfaceStyle": "light",
-        "newArchEnabled": true,
-        "splash": {
-            "image": "./assets/splash-icon.png",
-            "resizeMode": "contain",
-            "backgroundColor": "#ffffff"
-        },
-        "ios": {
-            "supportsTablet": true
-        },
-        "android": {
-            "adaptiveIcon": {
-                "foregroundImage": "./assets/adaptive-icon.png",
-                "backgroundColor": "#ffffff"
-            },
-            "permissions": [
-                "READ_EXTERNAL_STORAGE",
-                "READ_MEDIA_IMAGES"
-            ],
-            "package": "com.omnidevxs.stormchaser",
-            "edgeToEdgeEnabled": true
-        },
-        "web": {
-            "favicon": "./assets/favicon.png"
-        },
-        "extra": {
-            "eas": {
-                "projectId": "6ee74c34-5d41-470f-bc9e-1f3912f15596"
-            }
-        }
-    }
+  "expo": {
+    "name": "Storm Chaser",
+    "slug": "storm-chaser",
+    "version": "2.53.7.10",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "scheme": "GallerySlideshow",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "permissions": [
+        "READ_EXTERNAL_STORAGE",
+        "READ_MEDIA_IMAGES"
+      ],
+      "package": "com.omnidevxs.stormchaser",
+      "edgeToEdgeEnabled": true
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "6ee74c34-5d41-470f-bc9e-1f3912f15596"
+      }
+    },
+    "plugins": [
+      "expo-sqlite"
+    ]
+  }
 }
