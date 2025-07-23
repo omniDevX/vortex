@@ -2,22 +2,22 @@ import * as SQLite from 'expo-sqlite';
 import { StormDocumentation, WeatherData, Location } from '../types';
 
 class DatabaseService {
-  private db: SQLite.SQLiteDatabase | null = null;
+    private db: SQLite.SQLiteDatabase | null = null;
 
-  async initDatabase(): Promise<void> {
-    try {
-      this.db = await SQLite.openDatabaseAsync('stormchaser.db');
-      await this.createTables();
-    } catch (error) {
-      console.error('Error initializing database:', error);
-      throw error;
+    async initDatabase(): Promise<void> {
+        try {
+            this.db = await SQLite.openDatabaseAsync('stormchaser.db');
+            await this.createTables();
+        } catch (error) {
+            console.error('Error initializing database:', error);
+            throw error;
+        }
     }
-  }
 
-  private async createTables(): Promise<void> {
-    if (!this.db) return;
+    private async createTables(): Promise<void> {
+        if (!this.db) return;
 
-    const createStormTable = `
+        const createStormTable = `
       CREATE TABLE IF NOT EXISTS storm_documentation (
         id TEXT PRIMARY KEY,
         photo_uri TEXT NOT NULL,
@@ -42,18 +42,18 @@ class DatabaseService {
       );
     `;
 
-    try {
-      await this.db.execAsync(createStormTable);
-    } catch (error) {
-      console.error('Error creating tables:', error);
-      throw error;
+        try {
+            await this.db.execAsync(createStormTable);
+        } catch (error) {
+            console.error('Error creating tables:', error);
+            throw error;
+        }
     }
-  }
 
-  async saveStormDocumentation(storm: StormDocumentation): Promise<void> {
-    if (!this.db) throw new Error('Database not initialized');
+    async saveStormDocumentation(storm: StormDocumentation): Promise<void> {
+        if (!this.db) throw new Error('Database not initialized');
 
-    const query = `
+        const query = `
       INSERT OR REPLACE INTO storm_documentation (
         id, photo_uri, temperature, feels_like, humidity, wind_speed, 
         wind_direction, pressure, visibility, precipitation, weather_description, 
@@ -62,112 +62,130 @@ class DatabaseService {
       ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
 
-    const values = [
-      storm.id,
-      storm.photoUri,
-      storm.weatherConditions.temperature,
-      storm.weatherConditions.feelsLike,
-      storm.weatherConditions.humidity,
-      storm.weatherConditions.windSpeed,
-      storm.weatherConditions.windDirection,
-      storm.weatherConditions.pressure,
-      storm.weatherConditions.visibility,
-      storm.weatherConditions.precipitation,
-      storm.weatherConditions.weatherDescription,
-      storm.weatherConditions.weatherIcon,
-      storm.location.latitude,
-      storm.location.longitude,
-      storm.location.accuracy || null,
-      storm.dateTime,
-      storm.notes,
-      storm.stormType,
-      storm.createdAt,
-      storm.updatedAt,
-    ];
+        const values = [
+            storm.id,
+            storm.photoUri,
+            storm.weatherConditions.temperature,
+            storm.weatherConditions.feelsLike,
+            storm.weatherConditions.humidity,
+            storm.weatherConditions.windSpeed,
+            storm.weatherConditions.windDirection,
+            storm.weatherConditions.pressure,
+            storm.weatherConditions.visibility,
+            storm.weatherConditions.precipitation,
+            storm.weatherConditions.weatherDescription,
+            storm.weatherConditions.weatherIcon,
+            storm.location.latitude,
+            storm.location.longitude,
+            storm.location.accuracy || null,
+            storm.dateTime,
+            storm.notes,
+            storm.stormType,
+            storm.createdAt,
+            storm.updatedAt,
+        ];
 
-    try {
-      await this.db.runAsync(query, values);
-    } catch (error) {
-      console.error('Error saving storm documentation:', error);
-      throw error;
+        try {
+            await this.db.runAsync(query, values);
+        } catch (error) {
+            console.error('Error saving storm documentation:', error);
+            throw error;
+        }
     }
-  }
 
-  async getAllStormDocumentations(): Promise<StormDocumentation[]> {
-    if (!this.db) throw new Error('Database not initialized');
+    // async getAllStormDocumentations(): Promise<StormDocumentation[]> {
+    //     if (!this.db) throw new Error('Database not initialized');
 
-    const query = 'SELECT * FROM storm_documentation ORDER BY created_at DESC';
-    
-    try {
-      const result = await this.db.getAllAsync(query);
-      return result.map(this.mapRowToStormDocumentation);
-    } catch (error) {
-      console.error('Error fetching storm documentations:', error);
-      throw error;
+    //     const query = 'SELECT * FROM storm_documentation ORDER BY created_at DESC';
+
+    //     try {
+    //         const result = await this.db.getAllAsync(query);
+    //         return result.map(this.mapRowToStormDocumentation);
+    //     } catch (error) {
+    //         console.error('Error fetching storm documentations:', error);
+    //         throw error;
+    //     }
+    // }
+
+
+    async getAllStormDocumentations(): Promise<StormDocumentation[]> {
+        if (!this.db) {
+            console.error('Database not initialized. Call initDatabase() before querying.');
+            throw new Error('Database not initialized');
+        }
+
+        const query = 'SELECT * FROM storm_documentation ORDER BY created_at DESC';
+
+        try {
+            const rows = await this.db.getAllAsync(query);
+            return rows.map(row => this.mapRowToStormDocumentation(row));
+        } catch (error) {
+            console.error('Error fetching storm documentations:', error);
+            throw new Error(`Failed to fetch storm documentations: ${error instanceof Error ? error.message : String(error)}`);
+        }
     }
-  }
 
-  async getStormDocumentationById(id: string): Promise<StormDocumentation | null> {
-    if (!this.db) throw new Error('Database not initialized');
+    async getStormDocumentationById(id: string): Promise<StormDocumentation | null> {
+        if (!this.db) throw new Error('Database not initialized');
 
-    const query = 'SELECT * FROM storm_documentation WHERE id = ?';
-    
-    try {
-      const result = await this.db.getFirstAsync(query, [id]);
-      return result ? this.mapRowToStormDocumentation(result) : null;
-    } catch (error) {
-      console.error('Error fetching storm documentation by id:', error);
-      throw error;
+        const query = 'SELECT * FROM storm_documentation WHERE id = ?';
+
+        try {
+            const result = await this.db.getFirstAsync(query, [id]);
+            return result ? this.mapRowToStormDocumentation(result) : null;
+        } catch (error) {
+            console.error('Error fetching storm documentation by id:', error);
+            throw error;
+        }
     }
-  }
 
-  async deleteStormDocumentation(id: string): Promise<void> {
-    if (!this.db) throw new Error('Database not initialized');
+    async deleteStormDocumentation(id: string): Promise<void> {
+        if (!this.db) throw new Error('Database not initialized');
 
-    const query = 'DELETE FROM storm_documentation WHERE id = ?';
-    
-    try {
-      await this.db.runAsync(query, [id]);
-    } catch (error) {
-      console.error('Error deleting storm documentation:', error);
-      throw error;
+        const query = 'DELETE FROM storm_documentation WHERE id = ?';
+
+        try {
+            await this.db.runAsync(query, [id]);
+        } catch (error) {
+            console.error('Error deleting storm documentation:', error);
+            throw error;
+        }
     }
-  }
 
-  private mapRowToStormDocumentation(row: any): StormDocumentation {
-    const weatherConditions: WeatherData = {
-      temperature: row.temperature,
-      feelsLike: row.feels_like,
-      humidity: row.humidity,
-      windSpeed: row.wind_speed,
-      windDirection: row.wind_direction,
-      pressure: row.pressure,
-      visibility: row.visibility,
-      precipitation: row.precipitation,
-      weatherDescription: row.weather_description,
-      weatherIcon: row.weather_icon,
-      timestamp: row.date_time,
-    };
+    private mapRowToStormDocumentation(row: any): StormDocumentation {
+        const weatherConditions: WeatherData = {
+            temperature: row.temperature,
+            feelsLike: row.feels_like,
+            humidity: row.humidity,
+            windSpeed: row.wind_speed,
+            windDirection: row.wind_direction,
+            pressure: row.pressure,
+            visibility: row.visibility,
+            precipitation: row.precipitation,
+            weatherDescription: row.weather_description,
+            weatherIcon: row.weather_icon,
+            timestamp: row.date_time,
+        };
 
-    const location: Location = {
-      latitude: row.latitude,
-      longitude: row.longitude,
-      accuracy: row.accuracy,
-      timestamp: row.date_time,
-    };
+        const location: Location = {
+            latitude: row.latitude,
+            longitude: row.longitude,
+            accuracy: row.accuracy,
+            timestamp: row.date_time,
+        };
 
-    return {
-      id: row.id,
-      photoUri: row.photo_uri,
-      weatherConditions,
-      location,
-      dateTime: row.date_time,
-      notes: row.notes,
-      stormType: row.storm_type as any,
-      createdAt: row.created_at,
-      updatedAt: row.updated_at,
-    };
-  }
+        return {
+            id: row.id,
+            photoUri: row.photo_uri,
+            weatherConditions,
+            location,
+            dateTime: row.date_time,
+            notes: row.notes,
+            stormType: row.storm_type as any,
+            createdAt: row.created_at,
+            updatedAt: row.updated_at,
+        };
+    }
 }
 
 export const databaseService = new DatabaseService(); 
