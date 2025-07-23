@@ -12,6 +12,7 @@ import { darkTheme, lightTheme } from '../constants/theme';
 import { useWeather } from '../hooks/useWeather';
 import { getWeatherScreenStyles } from '../constants/styles';
 import { useSettings } from '../contexts/SettingsContext';
+import { useWeatherContext } from '../contexts/WeatherContext';
 
 export const WeatherScreen: React.FC = () => {
     const colorScheme = useColorScheme();
@@ -19,6 +20,8 @@ export const WeatherScreen: React.FC = () => {
     const currentTheme = theme === 'dark' ? darkTheme : lightTheme;
     const { settings } = useSettings();
     const [placeName, setPlaceName] = useState<string | null>(null);
+
+    const { setLocation, setWeather } = useWeatherContext();
 
     const {
         currentWeather,
@@ -42,6 +45,13 @@ export const WeatherScreen: React.FC = () => {
             setRefreshing(false);
         }
     };
+
+    useEffect(() => {
+        setLocation(location);
+    }, [location, setLocation]);
+    useEffect(() => {
+        setWeather(currentWeather);
+    }, [currentWeather, setWeather]);
 
     useEffect(() => {
         if (location) {

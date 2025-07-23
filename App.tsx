@@ -15,6 +15,7 @@ import { CaptureStormScreen } from './app/screens/CaptureStormScreen';
 import { StormListScreen } from './app/screens/StormListScreen';
 import { StormDetailScreen } from './app/screens/StormDetailScreen';
 import { RootTabParamList, StormStackParamList } from './app/types/navigation';
+import { WeatherProvider } from './app/contexts/WeatherContext';
 
 const Stack = createStackNavigator<StormStackParamList>();
 const Tab = createBottomTabNavigator<RootTabParamList>();
@@ -76,13 +77,15 @@ export default function App() {
     const currentTheme = theme === 'dark' ? darkTheme : lightTheme;
 
     return (
-        <SettingsProvider>
-            <SafeAreaProvider>
-                <NavigationContainer>
-                    <StatusBar barStyle={theme === 'dark' ? 'light-content' : 'dark-content'} />
-                    <TabNavigator />
-                </NavigationContainer>
-            </SafeAreaProvider>
-        </SettingsProvider>
+        <WeatherProvider>
+            <SettingsProvider>
+                <SafeAreaProvider>
+                    <NavigationContainer>
+                        <StatusBar barStyle={theme === 'dark' ? 'light-content' : 'dark-content'} />
+                        <TabNavigator />
+                    </NavigationContainer>
+                </SafeAreaProvider>
+            </SettingsProvider>
+        </WeatherProvider>
     );
 }
