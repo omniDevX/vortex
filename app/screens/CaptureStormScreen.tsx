@@ -14,6 +14,7 @@ import { generateId } from '../utils/helpers';
 import { getCaptureStormScreenStyles } from '../constants/styles';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { StormStackParamList } from '../types/navigation';
+import { useWeatherContext } from '../contexts/WeatherContext';
 
 interface CaptureStormScreenProps {
     navigation: StackNavigationProp<StormStackParamList, 'CaptureStorm'>;
@@ -25,33 +26,26 @@ export const CaptureStormScreen: React.FC<CaptureStormScreenProps> = ({ navigati
     const currentTheme = theme === 'dark' ? darkTheme : lightTheme;
 
     const { addStorm } = useStormDocumentation();
+    const { weather: currentWeather, location: currentLocation } = useWeatherContext();
 
     const [photoUri, setPhotoUri] = useState<string | null>(null);
     const [stormType, setStormType] = useState<StormType>(StormType.THUNDERSTORM);
     const [notes, setNotes] = useState('');
     const [loading, setLoading] = useState(false);
-    const [currentWeather, setCurrentWeather] = useState<WeatherData | null>(null);
-    const [currentLocation, setCurrentLocation] = useState<Location | null>(null);
 
-    useEffect(() => {
-        fetchCurrentData();
-    }, []);
+    // Remove useEffect(() => { fetchCurrentData(); }, []);
+    // Remove fetchCurrentData function
+    // Remove useState for currentWeather and currentLocation
+    // Use currentWeather and currentLocation from context in handleSave and render logic
 
-    const fetchCurrentData = async () => {
-        try {
-            setLoading(true);
-            const location = await locationService.getCurrentLocation();
-            setCurrentLocation(location);
-
-            const weather = await weatherService.getCurrentWeather(location);
-            setCurrentWeather(weather);
-        } catch (error) {
-            console.error('Error fetching current data:', error);
-            Alert.alert('Error', 'Failed to fetch location and weather data');
-        } finally {
-            setLoading(false);
-        }
-    };
+    if (!currentWeather || !currentLocation) {
+        return (
+            <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <ActivityIndicator size="large" />
+                <Text style={{ marginTop: 16 }}>Getting latest weather and location...</Text>
+            </SafeAreaView>
+        );
+    }
 
     const handleTakePhoto = async () => {
         try {
