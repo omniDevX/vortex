@@ -445,4 +445,149 @@ export const getStormDetailScreenStyles = (currentTheme: any) => StyleSheet.crea
     fontSize: 12,
     color: currentTheme.colors.text,
   },
+});
+
+export const getCaptureStormScreenStyles = (currentTheme: any) => StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: currentTheme.colors.background,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: currentTheme.spacing.md,
+    borderBottomWidth: 1,
+    borderBottomColor: currentTheme.colors.border,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: currentTheme.colors.text,
+  },
+  cancelButton: {
+    color: currentTheme.colors.primary,
+    fontSize: 16,
+  },
+  content: {
+    flex: 1,
+    padding: currentTheme.spacing.md,
+  },
+  photoSection: {
+    marginBottom: currentTheme.spacing.lg,
+  },
+  photoContainer: {
+    width: '100%',
+    height: 200,
+    backgroundColor: currentTheme.colors.surface,
+    borderRadius: currentTheme.borderRadius.md,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: currentTheme.spacing.md,
+    overflow: 'hidden',
+  },
+  photo: {
+    width: '100%',
+    height: '100%',
+  },
+  photoPlaceholder: {
+    fontSize: 48,
+    color: currentTheme.colors.textSecondary,
+    marginBottom: currentTheme.spacing.sm,
+  },
+  photoText: {
+    fontSize: 16,
+    color: currentTheme.colors.textSecondary,
+    textAlign: 'center',
+  },
+  photoButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  photoButton: {
+    backgroundColor: currentTheme.colors.primary,
+    paddingHorizontal: currentTheme.spacing.lg,
+    paddingVertical: currentTheme.spacing.md,
+    borderRadius: currentTheme.borderRadius.md,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  photoButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+    marginLeft: currentTheme.spacing.xs,
+  },
+  formSection: {
+    marginBottom: currentTheme.spacing.lg,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: currentTheme.colors.text,
+    marginBottom: currentTheme.spacing.md,
+  },
+  pickerContainer: {
+    backgroundColor: currentTheme.colors.surface,
+    borderRadius: currentTheme.borderRadius.md,
+    marginBottom: currentTheme.spacing.md,
+  },
+  picker: {
+    color: currentTheme.colors.text,
+  },
+  inputContainer: {
+    backgroundColor: currentTheme.colors.surface,
+    borderRadius: currentTheme.borderRadius.md,
+    marginBottom: currentTheme.spacing.md,
+  },
+  textInput: {
+    padding: currentTheme.spacing.md,
+    color: currentTheme.colors.text,
+    fontSize: 16,
+    minHeight: 100,
+    textAlignVertical: 'top',
+  },
+  weatherInfo: {
+    backgroundColor: currentTheme.colors.surface,
+    padding: currentTheme.spacing.md,
+    borderRadius: currentTheme.borderRadius.md,
+    marginBottom: currentTheme.spacing.lg,
+  },
+  weatherRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: currentTheme.spacing.xs,
+  },
+  weatherLabel: {
+    fontSize: 14,
+    color: currentTheme.colors.textSecondary,
+  },
+  weatherValue: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: currentTheme.colors.text,
+  },
+  saveButton: {
+    backgroundColor: currentTheme.colors.success,
+    paddingVertical: currentTheme.spacing.md,
+    borderRadius: currentTheme.borderRadius.md,
+    alignItems: 'center',
+    marginTop: currentTheme.spacing.lg,
+  },
+  saveButtonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  loadingOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 1000,
+  },
 }); 

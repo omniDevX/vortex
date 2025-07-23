@@ -3,14 +3,26 @@ import { StormDocumentation, WeatherData, Location } from '../types';
 
 class DatabaseService {
     private db: SQLite.SQLiteDatabase | null = null;
+    private initPromise: Promise<void> | null = null;
 
     async initDatabase(): Promise<void> {
-        try {
-            this.db = await SQLite.openDatabaseAsync('stormchaser.db');
-            await this.createTables();
-        } catch (error) {
-            console.error('Error initializing database:', error);
-            throw error;
+        if (this.db) return;
+        if (this.initPromise) return this.initPromise;
+        this.initPromise = (async () => {
+            try {
+                this.db = await SQLite.openDatabaseAsync('stormchaser.db');
+                await this.createTables();
+            } catch (error) {
+                console.error('Error initializing database:', error);
+                throw error;
+            }
+        })();
+        return this.initPromise;
+    }
+
+    private async ensureInitialized(): Promise<void> {
+        if (!this.db) {
+            await this.initDatabase();
         }
     }
 
@@ -51,6 +63,7 @@ class DatabaseService {
     }
 
     async saveStormDocumentation(storm: StormDocumentation): Promise<void> {
+        await this.ensureInitialized();
         if (!this.db) throw new Error('Database not initialized');
 
         const query = `
@@ -109,6 +122,7 @@ class DatabaseService {
 
 
     async getAllStormDocumentations(): Promise<StormDocumentation[]> {
+        await this.ensureInitialized();
         if (!this.db) {
             console.error('Database not initialized. Call initDatabase() before querying.');
             throw new Error('Database not initialized');
@@ -126,6 +140,7 @@ class DatabaseService {
     }
 
     async getStormDocumentationById(id: string): Promise<StormDocumentation | null> {
+        await this.ensureInitialized();
         if (!this.db) throw new Error('Database not initialized');
 
         const query = 'SELECT * FROM storm_documentation WHERE id = ?';
@@ -140,6 +155,7 @@ class DatabaseService {
     }
 
     async deleteStormDocumentation(id: string): Promise<void> {
+        await this.ensureInitialized();
         if (!this.db) throw new Error('Database not initialized');
 
         const query = 'DELETE FROM storm_documentation WHERE id = ?';
