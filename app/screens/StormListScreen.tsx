@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity, Alert, RefreshControl } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { StormCard } from '../components/StormCard';
@@ -33,6 +34,12 @@ export const StormListScreen: React.FC<StormListScreenProps> = ({ navigation }) 
             setRefreshing(false);
         }
     };
+
+    useFocusEffect(
+        React.useCallback(() => {
+            refreshStorms();
+        }, [refreshStorms])
+    );
 
     const handleDeleteStorm = (storm: StormDocumentation) => {
         Alert.alert(
