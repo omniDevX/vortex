@@ -15,11 +15,15 @@ import {
 interface WeatherCardProps {
   weather: WeatherData;
   theme?: 'light' | 'dark';
+  location?: { latitude: number; longitude: number };
+  placeName?: string;
 }
 
 export const WeatherCard: React.FC<WeatherCardProps> = ({ 
   weather, 
-  theme = 'light' 
+  theme = 'light',
+  location,
+  placeName
 }) => {
   const currentTheme = theme === 'dark' ? darkTheme : lightTheme;
 

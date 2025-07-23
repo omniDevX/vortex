@@ -34,92 +34,65 @@ export const DynamicBackground: React.FC<DynamicBackgroundProps> = ({
   const getWeatherBackground = (weatherData: WeatherData): WeatherBackground => {
     const temp = weatherData.temperature;
     const description = weatherData.weatherDescription.toLowerCase();
-    const isNight = new Date().getHours() >= 18 || new Date().getHours() <= 6;
-
+    // All gradients are now light for text readability
     // Thunderstorm
     if (description.includes('thunderstorm') || description.includes('storm')) {
       return {
-        colors: isNight 
-          ? ['#1a1a2e', '#16213e', '#0f3460'] 
-          : ['#2c3e50', '#34495e', '#5d6d7e'],
+        colors: ['#e0e7ef', '#b6c6e3', '#dbeafe'], // light blue/grey
         animation: 'rain'
       };
     }
-
     // Rain
     if (description.includes('rain') || description.includes('drizzle')) {
       return {
-        colors: isNight 
-          ? ['#2c3e50', '#34495e', '#5d6d7e'] 
-          : ['#74b9ff', '#0984e3', '#6c5ce7'],
+        colors: ['#e3f2fd', '#b3e5fc', '#b2ebf2'], // very light blue
         animation: 'rain'
       };
     }
-
     // Snow
     if (description.includes('snow') || description.includes('blizzard')) {
       return {
-        colors: isNight 
-          ? ['#2d3436', '#636e72', '#b2bec3'] 
-          : ['#dfe6e9', '#b2bec3', '#74b9ff'],
+        colors: ['#f8fafc', '#e0f7fa', '#e3eafc'], // white/light blue
         animation: 'snow'
       };
     }
-
     // Clear sky
     if (description.includes('clear')) {
       return {
-        colors: isNight 
-          ? ['#0c2461', '#1e3799', '#4a69bd'] 
-          : ['#74b9ff', '#0984e3', '#00b894'],
+        colors: ['#e0f7fa', '#b2ebf2', '#b3e5fc'], // light blue
         animation: 'clear'
       };
     }
-
     // Cloudy
     if (description.includes('cloud') || description.includes('overcast')) {
       return {
-        colors: isNight 
-          ? ['#2d3436', '#636e72', '#74b9ff'] 
-          : ['#b2bec3', '#74b9ff', '#0984e3'],
+        colors: ['#f1f5f9', '#e0e7ef', '#cbd5e1'], // light grey/blue
         animation: 'cloudy'
       };
     }
-
     // Fog
     if (description.includes('fog') || description.includes('mist')) {
       return {
-        colors: isNight 
-          ? ['#2d3436', '#636e72', '#b2bec3'] 
-          : ['#dfe6e9', '#b2bec3', '#74b9ff'],
+        colors: ['#f1f5f9', '#e0e7ef', '#cbd5e1'], // light grey
         animation: 'cloudy'
       };
     }
-
     // Temperature-based fallback
     if (temp < 0) {
       return {
-        colors: isNight 
-          ? ['#2d3436', '#636e72', '#74b9ff'] 
-          : ['#dfe6e9', '#b2bec3', '#74b9ff'],
+        colors: ['#f8fafc', '#e0f7fa', '#e3eafc'], // white/light blue
         animation: 'snow'
       };
     }
-
     if (temp > 25) {
       return {
-        colors: isNight 
-          ? ['#0c2461', '#1e3799', '#4a69bd'] 
-          : ['#ff7675', '#fd79a8', '#fdcb6e'],
+        colors: ['#e0f7fa', '#b2ebf2', '#b3e5fc'], // light blue
         animation: 'clear'
       };
     }
-
     // Default
     return {
-      colors: isNight 
-        ? ['#2d3436', '#636e72', '#74b9ff'] 
-        : ['#74b9ff', '#0984e3', '#00b894'],
+      colors: ['#f1f5f9', '#e0e7ef', '#cbd5e1'], // light grey/blue
       animation: 'clear'
     };
   };
