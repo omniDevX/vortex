@@ -2,15 +2,10 @@
 import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
-import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Linking, Share, View, Text, useColorScheme, StatusBar   } from 'react-native';
-import HomeScreen from './app/screens/HomeScreen';
-import AlbumDetailScreen from './app/screens/AlbumDetailScreen';
-import Constants from 'expo-constants';
+import { useColorScheme, StatusBar } from 'react-native';
 import "./global.css";
-import type { DrawerContentComponentProps } from '@react-navigation/drawer';
 import { Ionicons } from '@expo/vector-icons';
 import { darkTheme, lightTheme } from './app/constants/theme';
 import { WeatherScreen } from './app/screens/WeatherScreen';
@@ -19,32 +14,21 @@ import { SettingsProvider } from './app/contexts/SettingsContext';
 import { CaptureStormScreen } from './app/screens/CaptureStormScreen';
 import { StormDocumentationScreen } from './app/screens/StormDocumentationScreen';
 import { StormDetailScreen } from './app/screens/StormDetailScreen';
-import { StormDocumentation } from './app/types';
-import type { StackScreenProps } from '@react-navigation/stack';
+import { RootTabParamList, StormStackParamList } from './app/types/navigation';
 
-type StormStackParamList = {
-    StormList: undefined;
-    CaptureStorm: undefined;
-    StormDetail: { storm: StormDocumentation };
-  };
-// const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator<StormStackParamList>();
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<RootTabParamList>();
 
 const StormStack = () => {
     return (
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        <Stack.Screen name="StormList" component={StormDocumentationScreen} />
-        <Stack.Screen name="CaptureStorm" component={CaptureStormScreen} />
-        <Stack.Screen name="StormDetail" component={StormDetailScreen} />
-      </Stack.Navigator>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="StormList" component={StormDocumentationScreen} />
+            <Stack.Screen name="CaptureStorm" component={CaptureStormScreen} />
+            <Stack.Screen name="StormDetail" component={StormDetailScreen} />
+        </Stack.Navigator>
     );
-  };
-  
+};
+
 
 const TabNavigator = () => {
     const colorScheme = useColorScheme();
@@ -78,27 +62,10 @@ const TabNavigator = () => {
                 headerShown: false,
             })}
         >
-            <Tab.Screen
-                name="Weather"
-                component={WeatherScreen}
-                options={{
-                    title: 'Weather',
-                }}
-            />
-            <Tab.Screen
-                name="Storms"
-                component={StormStack}
-                options={{
-                    title: 'Storm Documentation',
-                }}
-            />
-            <Tab.Screen
-                name="Settings"
-                component={SettingsScreen}
-                options={{
-                    title: 'Settings',
-                }}
-            />
+            <Tab.Screen name="Weather" component={WeatherScreen} options={{ title: 'Weather' }} />
+            <Tab.Screen name="Storms" component={StormStack} options={{ title: 'Storm Documentation' }} />
+            <Tab.Screen name="Settings" component={SettingsScreen} options={{ title: 'Settings' }} />
+
         </Tab.Navigator>
     );
 };
