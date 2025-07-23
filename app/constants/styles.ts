@@ -104,4 +104,99 @@ export const getWeatherScreenStyles = (currentTheme: any) => StyleSheet.create({
     fontWeight: '600',
     color: currentTheme.colors.text,
   },
+});
+
+export const getSettingsScreenStyles = (currentTheme: any) => StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: currentTheme.colors.background,
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: currentTheme.spacing.md,
+    borderBottomWidth: 1,
+    borderBottomColor: currentTheme.colors.border,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: currentTheme.colors.text,
+    marginLeft: currentTheme.spacing.md,
+  },
+  content: {
+    flex: 1,
+  },
+  section: {
+    marginVertical: currentTheme.spacing.md,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: currentTheme.colors.text,
+    marginBottom: currentTheme.spacing.sm,
+    paddingHorizontal: currentTheme.spacing.md,
+  },
+  settingItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: currentTheme.spacing.md,
+    paddingHorizontal: currentTheme.spacing.md,
+    borderBottomWidth: 1,
+    borderBottomColor: currentTheme.colors.border,
+  },
+  settingInfo: {
+    flex: 1,
+  },
+  settingTitle: {
+    fontSize: 16,
+    color: currentTheme.colors.text,
+    marginBottom: currentTheme.spacing.xs,
+  },
+  settingDescription: {
+    fontSize: 14,
+    color: currentTheme.colors.textSecondary,
+  },
+  unitsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  unitButton: {
+    paddingHorizontal: currentTheme.spacing.md,
+    paddingVertical: currentTheme.spacing.sm,
+    borderRadius: currentTheme.borderRadius.sm,
+    marginLeft: currentTheme.spacing.sm,
+  },
+  unitButtonActive: {
+    backgroundColor: currentTheme.colors.primary,
+  },
+  unitButtonInactive: {
+    backgroundColor: currentTheme.colors.border,
+  },
+  unitButtonText: {
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  unitButtonTextActive: {
+    color: '#fff',
+  },
+  unitButtonTextInactive: {
+    color: currentTheme.colors.textSecondary,
+  },
+  dangerSection: {
+    marginTop: currentTheme.spacing.xl,
+  },
+  dangerButton: {
+    backgroundColor: currentTheme.colors.error,
+    marginHorizontal: currentTheme.spacing.md,
+    paddingVertical: currentTheme.spacing.md,
+    borderRadius: currentTheme.borderRadius.md,
+    alignItems: 'center',
+  },
+  dangerButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
 }); 

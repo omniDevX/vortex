@@ -17,8 +17,6 @@ export const WeatherScreen: React.FC = () => {
     const colorScheme = useColorScheme();
     const theme = colorScheme === 'dark' ? 'dark' : 'light';
     const currentTheme = theme === 'dark' ? darkTheme : lightTheme;
-    console.log('WeatherScreen text color:', currentTheme.colors.text);
-    console.log('WeatherScreen textSecondary color:', currentTheme.colors.textSecondary);
     const { settings } = useSettings();
     const [placeName, setPlaceName] = useState<string | null>(null);
 
