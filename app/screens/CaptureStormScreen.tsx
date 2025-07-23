@@ -1,14 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-    View,
-    Text,
-    ScrollView,
-    TouchableOpacity,
-    TextInput,
-    Image,
-    Alert,
-    ActivityIndicator,
-} from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, TextInput, Image, Alert, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
@@ -21,14 +12,14 @@ import { weatherService } from '../services/weather';
 import { useStormDocumentation } from '../hooks/useStormDocumentation';
 import { generateId } from '../utils/helpers';
 import { getCaptureStormScreenStyles } from '../constants/styles';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { StormStackParamList } from '../types/navigation';
 
 interface CaptureStormScreenProps {
-    navigation: any;
+    navigation: StackNavigationProp<StormStackParamList, 'CaptureStorm'>;
 }
 
-export const CaptureStormScreen: React.FC<CaptureStormScreenProps> = ({
-    navigation
-}) => {
+export const CaptureStormScreen: React.FC<CaptureStormScreenProps> = ({ navigation }) => {
     const colorScheme = useColorScheme();
     const theme = colorScheme === 'dark' ? 'dark' : 'light';
     const currentTheme = theme === 'dark' ? darkTheme : lightTheme;
