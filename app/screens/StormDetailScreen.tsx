@@ -1,34 +1,21 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
+import {  View,  Text, ScrollView, Image, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { lightTheme, darkTheme } from '../constants/theme';
 import { useColorScheme } from 'react-native';
 import { StormDocumentation } from '../types';
 import { formatDate, getStormTypeIcon, getStormTypeColor } from '../utils/helpers';
-import {
-  formatTemperature,
-  formatWindSpeed,
-  formatPressure,
-  formatHumidity,
-  formatVisibility,
-  getWindDirection,
-} from '../utils/helpers';
+import {  formatTemperature,  formatWindSpeed, formatPressure, formatHumidity, formatVisibility, getWindDirection } from '../utils/helpers';
+import { getStormDetailScreenStyles } from '../constants/styles';
+
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RouteProp } from '@react-navigation/native';
+import { StormStackParamList } from '../types/navigation';
 
 interface StormDetailScreenProps {
-  navigation: any;
-  route: {
-    params: {
-      storm: StormDocumentation;
-    };
-  };
+  navigation: StackNavigationProp<StormStackParamList, 'StormDetail'>;
+  route: RouteProp<StormStackParamList, 'StormDetail'>;
 }
 
 export const StormDetailScreen: React.FC<StormDetailScreenProps> = ({ 
@@ -40,144 +27,7 @@ export const StormDetailScreen: React.FC<StormDetailScreenProps> = ({
   const theme = colorScheme === 'dark' ? 'dark' : 'light';
   const currentTheme = theme === 'dark' ? darkTheme : lightTheme;
 
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: currentTheme.colors.background,
-    },
-    header: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      padding: currentTheme.spacing.md,
-      borderBottomWidth: 1,
-      borderBottomColor: currentTheme.colors.border,
-    },
-    title: {
-      fontSize: 20,
-      fontWeight: 'bold',
-      color: currentTheme.colors.text,
-    },
-    backButton: {
-      color: currentTheme.colors.primary,
-      fontSize: 16,
-    },
-    content: {
-      flex: 1,
-    },
-    photoContainer: {
-      width: '100%',
-      height: 300,
-      backgroundColor: currentTheme.colors.surface,
-    },
-    photo: {
-      width: '100%',
-      height: '100%',
-    },
-    infoContainer: {
-      padding: currentTheme.spacing.md,
-    },
-    stormHeader: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      marginBottom: currentTheme.spacing.md,
-    },
-    stormType: {
-      fontSize: 24,
-      fontWeight: 'bold',
-      color: currentTheme.colors.text,
-      marginRight: currentTheme.spacing.sm,
-    },
-    stormIcon: {
-      fontSize: 28,
-    },
-    date: {
-      fontSize: 16,
-      color: currentTheme.colors.textSecondary,
-      marginBottom: currentTheme.spacing.lg,
-    },
-    section: {
-      marginBottom: currentTheme.spacing.lg,
-    },
-    sectionTitle: {
-      fontSize: 18,
-      fontWeight: 'bold',
-      color: currentTheme.colors.text,
-      marginBottom: currentTheme.spacing.md,
-    },
-    weatherCard: {
-      backgroundColor: currentTheme.colors.surface,
-      padding: currentTheme.spacing.md,
-      borderRadius: currentTheme.borderRadius.md,
-      marginBottom: currentTheme.spacing.md,
-    },
-    weatherRow: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      marginBottom: currentTheme.spacing.sm,
-    },
-    weatherLabel: {
-      fontSize: 14,
-      color: currentTheme.colors.textSecondary,
-    },
-    weatherValue: {
-      fontSize: 14,
-      fontWeight: '600',
-      color: currentTheme.colors.text,
-    },
-    locationCard: {
-      backgroundColor: currentTheme.colors.surface,
-      padding: currentTheme.spacing.md,
-      borderRadius: currentTheme.borderRadius.md,
-      marginBottom: currentTheme.spacing.md,
-    },
-    locationRow: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      marginBottom: currentTheme.spacing.xs,
-    },
-    locationIcon: {
-      marginRight: currentTheme.spacing.xs,
-    },
-    locationText: {
-      fontSize: 14,
-      color: currentTheme.colors.text,
-    },
-    notesCard: {
-      backgroundColor: currentTheme.colors.surface,
-      padding: currentTheme.spacing.md,
-      borderRadius: currentTheme.borderRadius.md,
-    },
-    notesText: {
-      fontSize: 14,
-      color: currentTheme.colors.text,
-      lineHeight: 20,
-    },
-    noNotes: {
-      fontSize: 14,
-      color: currentTheme.colors.textSecondary,
-      fontStyle: 'italic',
-    },
-    metadataCard: {
-      backgroundColor: currentTheme.colors.surface,
-      padding: currentTheme.spacing.md,
-      borderRadius: currentTheme.borderRadius.md,
-      marginTop: currentTheme.spacing.md,
-    },
-    metadataRow: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      marginBottom: currentTheme.spacing.xs,
-    },
-    metadataLabel: {
-      fontSize: 12,
-      color: currentTheme.colors.textSecondary,
-    },
-    metadataValue: {
-      fontSize: 12,
-      color: currentTheme.colors.text,
-    },
-  });
+  const styles = getStormDetailScreenStyles(currentTheme);
 
   return (
     <SafeAreaView style={styles.container}>

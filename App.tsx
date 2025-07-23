@@ -12,7 +12,7 @@ import { WeatherScreen } from './app/screens/WeatherScreen';
 import { SettingsScreen } from './app/screens/SettingsScreen';
 import { SettingsProvider } from './app/contexts/SettingsContext';
 import { CaptureStormScreen } from './app/screens/CaptureStormScreen';
-import { StormDocumentationScreen } from './app/screens/StormDocumentationScreen';
+import { StormListScreen } from './app/screens/StormListScreen';
 import { StormDetailScreen } from './app/screens/StormDetailScreen';
 import { RootTabParamList, StormStackParamList } from './app/types/navigation';
 
@@ -22,7 +22,7 @@ const Tab = createBottomTabNavigator<RootTabParamList>();
 const StormStack = () => {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="StormList" component={StormDocumentationScreen} />
+            <Stack.Screen name="StormList" component={StormListScreen} />
             <Stack.Screen name="CaptureStorm" component={CaptureStormScreen} />
             <Stack.Screen name="StormDetail" component={StormDetailScreen} />
         </Stack.Navigator>
