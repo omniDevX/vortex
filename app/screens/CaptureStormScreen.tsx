@@ -7,8 +7,6 @@ import { lightTheme, darkTheme } from '../constants/theme';
 import { useColorScheme } from 'react-native';
 import { StormType, StormDocumentation, WeatherData, Location } from '../types';
 import { cameraService } from '../services/camera';
-import { locationService } from '../services/location';
-import { weatherService } from '../services/weather';
 import { useStormDocumentation } from '../hooks/useStormDocumentation';
 import { generateId } from '../utils/helpers';
 import { getCaptureStormScreenStyles } from '../constants/styles';
