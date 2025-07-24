@@ -289,3 +289,4 @@ npm install --save-dev  @testing-library/react-native  --legacy-peer-deps
 npm install --save-dev  @testing-library/jest-native  --legacy-peer-deps
 npm install --save-dev jest-environment-jsdom  --legacy-peer-deps
 npm install --save-dev jest-expo --legacy-peer-deps
+npx jest --testMatch "**/*.integration.test.ts"
