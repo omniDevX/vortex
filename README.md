@@ -281,3 +281,11 @@ For support and questions please email to omniDevX@gmail.com, or raise issues in
 
 1. jest
 2. debug
+
+npm install --save-dev jest 
+
+npm install --save-dev @testing-library/react-hooks  --legacy-peer-deps
+npm install --save-dev  @testing-library/react-native  --legacy-peer-deps
+npm install --save-dev  @testing-library/jest-native  --legacy-peer-deps
+npm install --save-dev jest-environment-jsdom  --legacy-peer-deps
+npm install --save-dev jest-expo --legacy-peer-deps
