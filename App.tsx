@@ -17,6 +17,7 @@ import { StormDetailScreen } from './app/screens/StormDetailScreen';
 import { RootTabParamList, StormStackParamList } from './app/types/navigation';
 import { WeatherProvider } from './app/contexts/WeatherContext';
 
+
 const Stack = createStackNavigator<StormStackParamList>();
 const Tab = createBottomTabNavigator<RootTabParamList>();
 
