@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, TextInput, Image, Alert, ActivityIndicator } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, TextInput, Image, Alert, ActivityIndicator, ImageBackground } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
@@ -13,6 +13,7 @@ import { getCaptureStormScreenStyles } from '../constants/styles';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { StormStackParamList } from '../types/navigation';
 import { useWeatherContext } from '../contexts/WeatherContext';
+import { useBackground } from '../contexts/BackgroundContext';
 
 interface CaptureStormScreenProps {
     navigation: StackNavigationProp<StormStackParamList, 'CaptureStorm'>;
@@ -25,6 +26,7 @@ export const CaptureStormScreen: React.FC<CaptureStormScreenProps> = ({ navigati
 
     const { addStorm } = useStormDocumentation();
     const { weather: currentWeather, location: currentLocation } = useWeatherContext();
+    const { currentBackgroundUrl } = useBackground();
 
     const [photoUri, setPhotoUri] = useState<string | null>(null);
     const [stormType, setStormType] = useState<StormType>(StormType.THUNDERSTORM);
@@ -107,13 +109,27 @@ export const CaptureStormScreen: React.FC<CaptureStormScreenProps> = ({ navigati
     const styles = getCaptureStormScreenStyles(currentTheme);
 
     return (
-        <SafeAreaView style={styles.container}>
-            <View style={styles.header}>
-                <Text style={styles.title}>Capture Storm</Text>
-                <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <Text style={styles.cancelButton}>Cancel</Text>
-                </TouchableOpacity>
-            </View>
+        <ImageBackground
+            source={{ uri: currentBackgroundUrl || 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800' }}
+            style={{ flex: 1 }}
+            resizeMode="cover"
+        >
+            <View style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                backgroundColor: 'rgba(0, 0, 0, 0.1)', // Lighter overlay for better text readability
+            }} />
+            
+            <SafeAreaView style={{ flex: 1 }}>
+                <View style={styles.header}>
+                    <Text style={styles.title}>Capture Storm</Text>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <Text style={styles.cancelButton}>Cancel</Text>
+                    </TouchableOpacity>
+                </View>
 
             <ScrollView style={styles.content}>
                 <View style={styles.photoSection}>
@@ -129,13 +145,19 @@ export const CaptureStormScreen: React.FC<CaptureStormScreenProps> = ({ navigati
                         )}
                     </View>
                     <View style={styles.photoButtons}>
-                        <TouchableOpacity style={styles.photoButton} onPress={handleTakePhoto}>
-                            <Ionicons name="camera" size={20} color="#fff" />
-                            <Text style={styles.photoButtonText}>Camera</Text>
+                        <TouchableOpacity 
+                            style={[styles.photoButton, { backgroundColor: 'rgba(255, 255, 255, 0.9)' }]} 
+                            onPress={handleTakePhoto}
+                        >
+                            <Ionicons name="camera" size={20} color="#000" />
+                            <Text style={[styles.photoButtonText, { color: '#000' }]}>Camera</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.photoButton} onPress={handlePickPhoto}>
-                            <Ionicons name="images" size={20} color="#fff" />
-                            <Text style={styles.photoButtonText}>Gallery</Text>
+                        <TouchableOpacity 
+                            style={[styles.photoButton, { backgroundColor: 'rgba(255, 255, 255, 0.9)' }]} 
+                            onPress={handlePickPhoto}
+                        >
+                            <Ionicons name="images" size={20} color="#000" />
+                            <Text style={[styles.photoButtonText, { color: '#000' }]}>Gallery</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -197,11 +219,14 @@ export const CaptureStormScreen: React.FC<CaptureStormScreenProps> = ({ navigati
                 )}
 
                 <TouchableOpacity
-                    style={styles.saveButton}
+                    style={[styles.saveButton, { 
+                        backgroundColor: 'rgba(34, 197, 94, 0.9)',
+                        marginBottom: 20
+                    }]}
                     onPress={handleSave}
                     disabled={loading || !photoUri}
                 >
-                    <Text style={styles.saveButtonText}>
+                    <Text style={[styles.saveButtonText, { color: '#fff' }]}>
                         {loading ? 'Saving...' : 'Save Storm Documentation'}
                     </Text>
                 </TouchableOpacity>
@@ -212,6 +237,7 @@ export const CaptureStormScreen: React.FC<CaptureStormScreenProps> = ({ navigati
                     <ActivityIndicator size="large" color={currentTheme.colors.primary} />
                 </View>
             )}
-        </SafeAreaView>
+            </SafeAreaView>
+        </ImageBackground>
     );
 }; 

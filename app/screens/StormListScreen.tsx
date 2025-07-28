@@ -173,7 +173,14 @@ export const StormListScreen: React.FC<StormListScreenProps> = ({ navigation }) 
             <View style={styles.header}>
                 <Text style={styles.title}>Storm Documentation</Text>
                 <TouchableOpacity
-                    style={styles.addButton}
+                    style={[styles.addButton, { 
+                        backgroundColor: 'rgba(34, 197, 94, 0.9)',
+                        shadowColor: '#000',
+                        shadowOffset: { width: 0, height: 2 },
+                        shadowOpacity: 0.3,
+                        shadowRadius: 4,
+                        elevation: 5
+                    }]}
                     onPress={() => navigation.navigate('CaptureStorm')}
                 >
                     <Ionicons name="add" size={24} color="#fff" />
