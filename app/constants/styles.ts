@@ -626,19 +626,117 @@ export const getWeatherCardStyles = (currentTheme: any) => StyleSheet.create({
     hourlySection: {
         marginTop: currentTheme.spacing.md,
     },
+    hourlyHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: currentTheme.spacing.sm,
+    },
     hourlyTitle: {
         fontSize: 16,
         fontWeight: '600',
         color: currentTheme.colors.text,
-        marginBottom: currentTheme.spacing.sm,
     },
-    hourlyScrollView: {
-        flexGrow: 0,
+    viewToggle: {
+        flexDirection: 'row',
+        backgroundColor: currentTheme.colors.border,
+        borderRadius: currentTheme.borderRadius.sm,
+        padding: 2,
     },
-    hourlyItem: {
+    toggleButton: {
+        paddingHorizontal: currentTheme.spacing.sm,
+        paddingVertical: currentTheme.spacing.xs,
+        borderRadius: currentTheme.borderRadius.xs,
+    },
+    toggleButtonActive: {
+        backgroundColor: currentTheme.colors.primary,
+    },
+    toggleButtonText: {
+        fontSize: 12,
+        color: currentTheme.colors.textSecondary,
+        fontWeight: '500',
+    },
+    toggleButtonTextActive: {
+        color: '#fff',
+    },
+    // Period-based grid styles
+    hourlyGrid: {
+        marginTop: currentTheme.spacing.sm,
+    },
+    periodSection: {
+        marginBottom: currentTheme.spacing.lg,
+        backgroundColor: currentTheme.colors.background,
+        borderRadius: currentTheme.borderRadius.md,
+        padding: currentTheme.spacing.md,
+        borderWidth: 1,
+        borderColor: currentTheme.colors.border,
+    },
+    periodHeader: {
+        flexDirection: 'row',
         alignItems: 'center',
-        marginRight: currentTheme.spacing.md,
-        minWidth: 50,
+        marginBottom: currentTheme.spacing.md,
+        paddingBottom: currentTheme.spacing.sm,
+        borderBottomWidth: 1,
+        borderBottomColor: currentTheme.colors.border,
+    },
+    periodIcon: {
+        fontSize: 20,
+        marginRight: currentTheme.spacing.sm,
+    },
+    periodLabel: {
+        fontSize: 16,
+        fontWeight: '600',
+        color: currentTheme.colors.text,
+        flex: 1,
+    },
+    periodCount: {
+        fontSize: 12,
+        color: currentTheme.colors.textSecondary,
+        fontStyle: 'italic',
+    },
+    periodGrid: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
+    },
+    periodItem: {
+        width: '30%',
+        alignItems: 'center',
+        paddingVertical: currentTheme.spacing.sm,
+        paddingHorizontal: currentTheme.spacing.xs,
+        marginBottom: currentTheme.spacing.sm,
+        backgroundColor: currentTheme.colors.surface,
+        borderRadius: currentTheme.borderRadius.sm,
+        borderWidth: 1,
+        borderColor: currentTheme.colors.border,
+    },
+    periodItemFirst: {
+        borderLeftWidth: 3,
+        borderLeftColor: currentTheme.colors.primary,
+    },
+    periodItemLast: {
+        borderRightWidth: 3,
+        borderRightColor: currentTheme.colors.primary,
+    },
+    periodTime: {
+        fontSize: 11,
+        color: currentTheme.colors.textSecondary,
+        marginBottom: currentTheme.spacing.xs,
+        fontWeight: '500',
+    },
+    periodWeatherIcon: {
+        fontSize: 18,
+        marginBottom: currentTheme.spacing.xs,
+    },
+    periodTemp: {
+        fontSize: 13,
+        fontWeight: '600',
+        color: currentTheme.colors.text,
+    },
+    periodPrecipitation: {
+        fontSize: 9,
+        color: currentTheme.colors.textSecondary,
+        marginTop: currentTheme.spacing.xs,
     },
     hourlyTime: {
         fontSize: 12,
@@ -658,5 +756,100 @@ export const getWeatherCardStyles = (currentTheme: any) => StyleSheet.create({
         fontSize: 10,
         color: currentTheme.colors.textSecondary,
         marginTop: currentTheme.spacing.xs,
+    },
+    // Timeline view styles
+    hourlyTimeline: {
+        marginTop: currentTheme.spacing.sm,
+    },
+    timelineItem: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingVertical: currentTheme.spacing.xs,
+        borderBottomWidth: 1,
+        borderBottomColor: currentTheme.colors.border,
+    },
+    timelineTimeContainer: {
+        width: 60,
+        alignItems: 'flex-start',
+    },
+    timelineTime: {
+        fontSize: 12,
+        color: currentTheme.colors.textSecondary,
+        fontWeight: '500',
+    },
+    timelineContent: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginLeft: currentTheme.spacing.sm,
+    },
+    timelineIcon: {
+        fontSize: 16,
+        marginRight: currentTheme.spacing.sm,
+    },
+    timelineTemp: {
+        fontSize: 14,
+        fontWeight: '600',
+        color: currentTheme.colors.text,
+        flex: 1,
+    },
+    timelinePrecipitation: {
+        fontSize: 10,
+        color: currentTheme.colors.textSecondary,
+        marginLeft: currentTheme.spacing.sm,
+    },
+    // Compact view styles
+    hourlyCompact: {
+        marginTop: currentTheme.spacing.sm,
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
+    },
+    compactItem: {
+        width: '30%',
+        alignItems: 'center',
+        paddingVertical: currentTheme.spacing.xs,
+        marginBottom: currentTheme.spacing.sm,
+        backgroundColor: currentTheme.colors.background,
+        borderRadius: currentTheme.borderRadius.sm,
+        borderWidth: 1,
+        borderColor: currentTheme.colors.border,
+    },
+    compactTime: {
+        fontSize: 10,
+        color: currentTheme.colors.textSecondary,
+        marginBottom: currentTheme.spacing.xs,
+        fontWeight: '500',
+    },
+    compactIcon: {
+        fontSize: 16,
+        marginBottom: currentTheme.spacing.xs,
+    },
+    compactTemp: {
+        fontSize: 12,
+        fontWeight: '600',
+        color: currentTheme.colors.text,
+    },
+    compactPrecipitation: {
+        fontSize: 8,
+        color: currentTheme.colors.textSecondary,
+        marginTop: currentTheme.spacing.xs,
+    },
+    // Grid layout styles
+    gridContainer: {
+        flex: 1,
+        padding: currentTheme.spacing.sm,
+    },
+    grid: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
+    },
+    gridItem: {
+        width: '12%', // 8 columns (100% / 8 = 12.5%, but using 12% for spacing)
+        marginBottom: currentTheme.spacing.sm,
+        minHeight: 200,
     },
 }); 
