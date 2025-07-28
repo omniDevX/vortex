@@ -30,7 +30,6 @@ A comprehensive mobile application for storm chasing hobbyist meteorologists, bu
 - **Camera**: Expo Image Picker
 - **Location**: Expo Location
 - **UI Components**: Custom components with theme support
-- **Testing**: Jest for unit testing
 
 ## 📱 Screenshots Video Recording
 
@@ -181,21 +180,6 @@ CREATE TABLE storm_documentation (
 - **Empty States**: Helpful messages when no data is available
 - **Accessibility**: Proper contrast ratios and touch targets
 
-## 🧪 Testing
-
-### Unit Tests
-The app includes comprehensive unit tests for utility functions:
-
-```bash
-npm test
-```
-
-### Test Coverage
-- Helper functions (formatting, validation)
-- Utility functions (ID generation, text manipulation)
-- Service layer functions
-- Component rendering
-
 ## 🔧 Configuration
 
 ### App Configuration (`app.json`)
@@ -252,8 +236,7 @@ npm test
 1. Fork the repository
 2. Create a feature branch
 3. Make your changes
-4. Add tests for new functionality
-5. Submit a pull request
+4. Submit a pull request
 
 ## 📄 License
 
@@ -275,16 +258,4 @@ For support and questions please email to omniDevX@gmail.com, or raise issues in
 
 ---
 
-**Built with ❤️ for the meteorology community** 
-
-1. jest
-2. debug
-
-npm install --save-dev jest 
-
-npm install --save-dev @testing-library/react-hooks  --legacy-peer-deps
-npm install --save-dev  @testing-library/react-native  --legacy-peer-deps
-npm install --save-dev  @testing-library/jest-native  --legacy-peer-deps
-npm install --save-dev jest-environment-jsdom  --legacy-peer-deps
-npm install --save-dev jest-expo --legacy-peer-deps
-npx jest --testMatch "**/*.integration.test.ts"
+**Built with ❤️ for the meteorology community**
