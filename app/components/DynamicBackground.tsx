@@ -36,7 +36,7 @@ export const DynamicBackground: React.FC<DynamicBackgroundProps> = ({
     const fetchBackgroundImages = async () => {
         try {
             setIsLoading(true);
-            const response = await fetch('https://api.github.com/repos/silkbeauty/ssart/contents/scene');
+            const response = await fetch('https://api.github.com/repos/silkbeauty/ssart/contents/zzz');
 
             if (!response.ok) {
                 throw new Error('Failed to fetch images from GitHub');
