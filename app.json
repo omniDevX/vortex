@@ -2,7 +2,7 @@
   "expo": {
     "name": "Storm Chaser",
     "slug": "storm-chaser",
-    "version": "2.53.7.23",
+    "version": "2.53.7.28",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "scheme": "GallerySlideshow",
