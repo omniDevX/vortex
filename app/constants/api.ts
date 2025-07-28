@@ -11,6 +11,7 @@ export const API_PARAMS = {
     },
     FORECAST: {
         daily: 'temperature_2m_max,temperature_2m_min,precipitation_sum,weather_code',
+        hourly: 'temperature_2m,weather_code,precipitation_probability',
         timezone: 'auto',
     },
 };

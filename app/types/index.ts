@@ -53,6 +53,14 @@ export interface WeatherForecast {
     windSpeed: number;
 }
 
+export interface HourlyForecast {
+    time: string;
+    temperature: number;
+    weatherDescription: string;
+    weatherIcon: string;
+    precipitationProbability: number;
+}
+
 export interface AppTheme {
     colors: {
         primary: string;

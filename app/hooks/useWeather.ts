@@ -1,11 +1,12 @@
 import { useState, useEffect, useCallback } from 'react';
-import { WeatherData, Location, WeatherForecast } from '../types';
+import { WeatherData, Location, WeatherForecast, HourlyForecast } from '../types';
 import { weatherService } from '../services/weather';
 import { locationService } from '../services/location';
 
 interface UseWeatherReturn {
     currentWeather: WeatherData | null;
     forecast: WeatherForecast[];
+    hourlyForecast: HourlyForecast[];
     location: Location | null;
     loading: boolean;
     error: string | null;
@@ -16,6 +17,7 @@ interface UseWeatherReturn {
 export const useWeather = (): UseWeatherReturn => {
     const [currentWeather, setCurrentWeather] = useState<WeatherData | null>(null);
     const [forecast, setForecast] = useState<WeatherForecast[]>([]);
+    const [hourlyForecast, setHourlyForecast] = useState<HourlyForecast[]>([]);
     const [location, setLocation] = useState<Location | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -36,13 +38,15 @@ export const useWeather = (): UseWeatherReturn => {
     const fetchWeather = useCallback(async (currentLocation: Location) => {
         try {
             setError(null);
-            const [weatherData, forecastData] = await Promise.all([
+            const [weatherData, forecastData, hourlyData] = await Promise.all([
                 weatherService.getCurrentWeather(currentLocation),
                 weatherService.getWeatherForecast(currentLocation),
+                weatherService.getHourlyForecast(currentLocation),
             ]);
 
             setCurrentWeather(weatherData);
             setForecast(forecastData);
+            setHourlyForecast(hourlyData);
         } catch (err) {
             const errorMessage = err instanceof Error ? err.message : 'Failed to fetch weather data';
             setError(errorMessage);
@@ -89,6 +93,7 @@ export const useWeather = (): UseWeatherReturn => {
     return {
         currentWeather,
         forecast,
+        hourlyForecast,
         location,
         loading,
         error,

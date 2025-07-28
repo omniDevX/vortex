@@ -24,6 +24,7 @@ export const WeatherScreen: React.FC = () => {
     const {
         currentWeather,
         forecast,
+        hourlyForecast,
         location,
         loading,
         error,
@@ -173,7 +174,13 @@ export const WeatherScreen: React.FC = () => {
                         }
                     >
                         {currentWeather && (
-                            <WeatherCard weather={currentWeather} theme={theme} location={location ?? undefined} placeName={placeName ?? undefined} />
+                            <WeatherCard 
+                                weather={currentWeather} 
+                                hourlyForecast={hourlyForecast}
+                                theme={theme} 
+                                location={location ?? undefined} 
+                                placeName={placeName ?? undefined} 
+                            />
                         )}
 
                         {filteredForecast.length > 0 && (
@@ -260,7 +267,13 @@ export const WeatherScreen: React.FC = () => {
                         }
                     >
                         {currentWeather && (
-                            <WeatherCard weather={currentWeather} theme={theme} location={location ?? undefined} placeName={placeName ?? undefined} />
+                            <WeatherCard 
+                                weather={currentWeather} 
+                                hourlyForecast={hourlyForecast}
+                                theme={theme} 
+                                location={location ?? undefined} 
+                                placeName={placeName ?? undefined} 
+                            />
                         )}
 
                         {filteredForecast.length > 0 && (

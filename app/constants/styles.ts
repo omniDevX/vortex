@@ -610,38 +610,60 @@ export const getWeatherCardStyles = (currentTheme: any) => StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: currentTheme.spacing.md,
+    marginBottom: currentTheme.spacing.lg,
+  },
+  temperatureContainer: {
+    flexDirection: 'row',
+    alignItems: 'baseline',
+    flex: 1,
   },
   temperature: {
     fontSize: 48,
     fontWeight: 'bold',
     color: currentTheme.colors.text,
+    marginRight: currentTheme.spacing.sm,
+  },
+  description: {
+    fontSize: 16,
+    color: currentTheme.colors.textSecondary,
   },
   weatherIcon: {
     fontSize: 48,
   },
-  description: {
-    fontSize: 18,
-    color: currentTheme.colors.textSecondary,
-    marginBottom: currentTheme.spacing.lg,
+  hourlySection: {
+    marginTop: currentTheme.spacing.md,
   },
-  detailsContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
+  hourlyTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: currentTheme.colors.text,
+    marginBottom: currentTheme.spacing.sm,
   },
-  detailItem: {
-    width: '48%',
-    marginBottom: currentTheme.spacing.md,
+  hourlyScrollView: {
+    flexGrow: 0,
   },
-  detailLabel: {
+  hourlyItem: {
+    alignItems: 'center',
+    marginRight: currentTheme.spacing.md,
+    minWidth: 50,
+  },
+  hourlyTime: {
     fontSize: 12,
     color: currentTheme.colors.textSecondary,
     marginBottom: currentTheme.spacing.xs,
   },
-  detailValue: {
-    fontSize: 16,
+  hourlyIcon: {
+    fontSize: 20,
+    marginBottom: currentTheme.spacing.xs,
+  },
+  hourlyTemp: {
+    fontSize: 14,
     fontWeight: '600',
     color: currentTheme.colors.text,
+  },
+  hourlyPrecipitation: {
+    fontSize: 10,
+    color: currentTheme.colors.textSecondary,
+    marginTop: currentTheme.spacing.xs,
   },
 }); 

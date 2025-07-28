@@ -1,4 +1,4 @@
-import { WeatherData, Location, WeatherForecast } from '../types';
+import { WeatherData, Location, WeatherForecast, HourlyForecast } from '../types';
 import { API_ENDPOINTS, API_PARAMS, WEATHER_CODES } from '../constants/api';
 
 class WeatherService {
@@ -96,6 +96,74 @@ class WeatherService {
         }
     }
 
+    async getHourlyForecast(location: Location): Promise<HourlyForecast[]> {
+        try {
+            const url = new URL(API_ENDPOINTS.WEATHER_FORECAST);
+            url.searchParams.set('latitude', location.latitude.toString());
+            url.searchParams.set('longitude', location.longitude.toString());
+            url.searchParams.set('hourly', API_PARAMS.FORECAST.hourly);
+            url.searchParams.set('timezone', API_PARAMS.FORECAST.timezone);
+
+            const response = await fetch(url.toString());
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+
+            if (!data.hourly) {
+                throw new Error('Invalid hourly forecast data received');
+            }
+
+            const hourly = data.hourly;
+            const forecasts: HourlyForecast[] = [];
+
+            // Get next 24 hours from current time
+            const now = new Date();
+            const currentHour = now.getHours();
+
+            for (let i = 0; i < 24; i++) {
+                const hourIndex = currentHour + i;
+                if (hourIndex < hourly.time.length) {
+                    const weatherCode = hourly.weather_code[hourIndex];
+                    const weatherInfo = WEATHER_CODES[weatherCode as keyof typeof WEATHER_CODES] ||
+                        { description: 'Unknown', icon: '❓' };
+
+                    // Determine if it's day or night (6 AM to 6 PM is day)
+                    const hourOfDay = new Date(hourly.time[hourIndex]).getHours();
+                    const isDaytime = hourOfDay >= 6 && hourOfDay < 18;
+                    
+                    // Use appropriate icon based on time of day
+                    let icon = weatherInfo.icon;
+                    if (weatherCode === 0) { // Clear sky
+                        icon = isDaytime ? '☀️' : '🌙';
+                    } else if (weatherCode === 1) { // Mainly clear
+                        icon = isDaytime ? '🌤️' : '🌙';
+                    } else if (weatherCode === 2) { // Partly cloudy
+                        icon = isDaytime ? '⛅' : '☁️';
+                    } else if (weatherCode === 3) { // Overcast
+                        icon = '☁️'; // Same for day and night
+                    }
+
+                    forecasts.push({
+                        time: hourly.time[hourIndex],
+                        temperature: hourly.temperature_2m[hourIndex],
+                        weatherDescription: weatherInfo.description,
+                        weatherIcon: icon,
+                        precipitationProbability: hourly.precipitation_probability[hourIndex],
+                    });
+                }
+            }
+
+            return forecasts;
+        } catch (error) {
+            console.error('Error fetching hourly forecast:', error);
+            // Return mock hourly forecast data as fallback
+            return this.getMockHourlyForecastData();
+        }
+    }
+
     private getMockWeatherData(): WeatherData {
         return {
             temperature: 22.5,
@@ -130,6 +198,32 @@ class WeatherService {
                 weatherIcon: '⛅',
                 precipitation: Math.random() * 5,
                 windSpeed: 8 + Math.random() * 8,
+            });
+        }
+
+        return forecasts;
+    }
+
+    private getMockHourlyForecastData(): HourlyForecast[] {
+        const forecasts: HourlyForecast[] = [];
+        const now = new Date();
+
+        for (let i = 0; i < 24; i++) {
+            const time = new Date(now);
+            time.setHours(now.getHours() + i);
+            
+            const hourOfDay = time.getHours();
+            const isDaytime = hourOfDay >= 6 && hourOfDay < 18;
+            
+            // Use appropriate icon based on time of day
+            const icon = isDaytime ? '☀️' : '🌙';
+
+            forecasts.push({
+                time: time.toISOString(),
+                temperature: 20 + Math.random() * 10,
+                weatherDescription: 'Clear sky',
+                weatherIcon: icon,
+                precipitationProbability: Math.random() * 100,
             });
         }
 
