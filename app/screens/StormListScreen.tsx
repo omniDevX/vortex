@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, Alert, RefreshControl } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, Alert, RefreshControl, ImageBackground } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { StormCard } from '../components/StormCard';
+import { useBackground } from '../contexts/BackgroundContext';
 import { useStormDocumentation } from '../hooks/useStormDocumentation';
 import { lightTheme, darkTheme } from '../constants/theme';
 import { useColorScheme } from 'react-native';
@@ -20,6 +21,7 @@ export const StormListScreen: React.FC<StormListScreenProps> = ({ navigation }) 
     const colorScheme = useColorScheme();
     const theme = colorScheme === 'dark' ? 'dark' : 'light';
     const currentTheme = theme === 'dark' ? darkTheme : lightTheme;
+    const { currentBackgroundUrl } = useBackground();
 
     const { storms, loading, error, deleteStorm, refreshStorms } = useStormDocumentation();
     const [refreshing, setRefreshing] = useState(false);
@@ -79,29 +81,95 @@ export const StormListScreen: React.FC<StormListScreenProps> = ({ navigation }) 
 
     if (loading && storms.length === 0) {
         return (
-            <SafeAreaView style={styles.container}>
-                <View style={styles.loadingContainer}>
-                    <Text style={styles.loadingText}>Loading storm data...</Text>
-                </View>
-            </SafeAreaView>
+            <View style={{ flex: 1 }}>
+                {currentBackgroundUrl ? (
+                    <ImageBackground
+                        source={{ uri: currentBackgroundUrl }}
+                        style={{ flex: 1 }}
+                        resizeMode="cover"
+                    >
+                        <View style={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            backgroundColor: 'rgba(0, 0, 0, 0.3)', // Dark overlay for better text readability
+                        }} />
+                        <SafeAreaView style={styles.container}>
+                            <View style={styles.loadingContainer}>
+                                <Text style={styles.loadingText}>Loading storm data...</Text>
+                            </View>
+                        </SafeAreaView>
+                    </ImageBackground>
+                ) : (
+                    <SafeAreaView style={styles.container}>
+                        <View style={styles.loadingContainer}>
+                            <Text style={styles.loadingText}>Loading storm data...</Text>
+                        </View>
+                    </SafeAreaView>
+                )}
+            </View>
         );
     }
 
     if (error && storms.length === 0) {
         return (
-            <SafeAreaView style={styles.container}>
-                <View style={styles.errorContainer}>
-                    <Text style={styles.errorText}>{error}</Text>
-                    <TouchableOpacity style={styles.retryButton} onPress={refreshStorms}>
-                        <Text style={styles.retryButtonText}>Retry</Text>
-                    </TouchableOpacity>
-                </View>
-            </SafeAreaView>
+            <View style={{ flex: 1 }}>
+                {currentBackgroundUrl ? (
+                    <ImageBackground
+                        source={{ uri: currentBackgroundUrl }}
+                        style={{ flex: 1 }}
+                        resizeMode="cover"
+                    >
+                        <View style={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            backgroundColor: 'rgba(0, 0, 0, 0.3)', // Dark overlay for better text readability
+                        }} />
+                        <SafeAreaView style={styles.container}>
+                            <View style={styles.errorContainer}>
+                                <Text style={styles.errorText}>{error}</Text>
+                                <TouchableOpacity style={styles.retryButton} onPress={refreshStorms}>
+                                    <Text style={styles.retryButtonText}>Retry</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </SafeAreaView>
+                    </ImageBackground>
+                ) : (
+                    <SafeAreaView style={styles.container}>
+                        <View style={styles.errorContainer}>
+                            <Text style={styles.errorText}>{error}</Text>
+                            <TouchableOpacity style={styles.retryButton} onPress={refreshStorms}>
+                                <Text style={styles.retryButtonText}>Retry</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </SafeAreaView>
+                )}
+            </View>
         );
     }
 
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={{ flex: 1 }}>
+            {currentBackgroundUrl ? (
+                <ImageBackground
+                    source={{ uri: currentBackgroundUrl }}
+                    style={{ flex: 1 }}
+                    resizeMode="cover"
+                >
+                    <View style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        backgroundColor: 'rgba(0, 0, 0, 0.3)', // Dark overlay for better text readability
+                    }} />
+                    <SafeAreaView style={styles.container}>
             <View style={styles.header}>
                 <Text style={styles.title}>Storm Documentation</Text>
                 <TouchableOpacity
@@ -151,7 +219,63 @@ export const StormListScreen: React.FC<StormListScreenProps> = ({ navigation }) 
                         </Text>
                     </View>
                 }
-            />
-        </SafeAreaView>
+                            />
+            </SafeAreaView>
+                </ImageBackground>
+            ) : (
+                <SafeAreaView style={styles.container}>
+                    <View style={styles.header}>
+                        <Text style={styles.title}>Storm Documentation</Text>
+                        <TouchableOpacity
+                            style={styles.addButton}
+                            onPress={() => navigation.navigate('CaptureStorm')}
+                        >
+                            <Ionicons name="add" size={24} color="#fff" />
+                        </TouchableOpacity>
+                    </View>
+
+                    <FlatList
+                        style={styles.content}
+                        data={storms}
+                        renderItem={renderStormItem}
+                        keyExtractor={(item) => item.id}
+                        refreshControl={
+                            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                        }
+                        ListHeaderComponent={
+                            storms.length > 0 ? (
+                                <View style={styles.statsContainer}>
+                                    <View style={styles.statItem}>
+                                        <Text style={styles.statNumber}>{storms.length}</Text>
+                                        <Text style={styles.statLabel}>Total Storms</Text>
+                                    </View>
+                                    <View style={styles.statItem}>
+                                        <Text style={styles.statNumber}>
+                                            {storms.filter(s => s.stormType === 'Thunderstorm').length}
+                                        </Text>
+                                        <Text style={styles.statLabel}>Thunderstorms</Text>
+                                    </View>
+                                    <View style={styles.statItem}>
+                                        <Text style={styles.statNumber}>
+                                            {new Set(storms.map(s => new Date(s.dateTime).toDateString())).size}
+                                        </Text>
+                                        <Text style={styles.statLabel}>Days Active</Text>
+                                    </View>
+                                </View>
+                            ) : null
+                        }
+                        ListEmptyComponent={
+                            <View style={styles.emptyContainer}>
+                                <Text style={styles.emptyIcon}>🌩️</Text>
+                                <Text style={styles.emptyText}>No storm documentation yet</Text>
+                                <Text style={styles.emptySubtext}>
+                                    Tap the + button to capture your first storm
+                                </Text>
+                            </View>
+                        }
+                    />
+                </SafeAreaView>
+            )}
+        </View>
     );
 }; 
