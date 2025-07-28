@@ -5,8 +5,8 @@
     "version": "2.53.7.28",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "scheme": "GallerySlideshow",
-    "userInterfaceStyle": "light",
+    "scheme": "stormchaser",
+    "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "splash": {
       "image": "./assets/splash-icon.png",
@@ -14,7 +14,12 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app needs access to camera to capture storm photos.",
+        "NSLocationWhenInUseUsageDescription": "This app needs access to location to provide weather data and track storm locations.",
+        "NSPhotoLibraryUsageDescription": "This app needs access to photo library to save and access storm photos."
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -23,7 +28,11 @@
       },
       "permissions": [
         "READ_EXTERNAL_STORAGE",
-        "READ_MEDIA_IMAGES"
+        "READ_MEDIA_IMAGES",
+        "CAMERA",
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "WRITE_EXTERNAL_STORAGE"
       ],
       "package": "com.omnidevxs.stormchaser",
       "edgeToEdgeEnabled": true
@@ -37,7 +46,10 @@
       }
     },
     "plugins": [
-      "expo-sqlite"
+      "expo-sqlite",
+      "expo-camera",
+      "expo-location",
+      "expo-media-library"
     ]
   }
 }
