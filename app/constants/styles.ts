@@ -590,4 +590,58 @@ export const getCaptureStormScreenStyles = (currentTheme: any) => StyleSheet.cre
     alignItems: 'center',
     zIndex: 1000,
   },
+});
+
+export const getWeatherCardStyles = (currentTheme: any) => StyleSheet.create({
+  container: {
+    borderRadius: currentTheme.borderRadius.lg,
+    overflow: 'hidden',
+    margin: currentTheme.spacing.md,
+    elevation: 4,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+  },
+  gradient: {
+    padding: currentTheme.spacing.lg,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: currentTheme.spacing.md,
+  },
+  temperature: {
+    fontSize: 48,
+    fontWeight: 'bold',
+    color: currentTheme.colors.text,
+  },
+  weatherIcon: {
+    fontSize: 48,
+  },
+  description: {
+    fontSize: 18,
+    color: currentTheme.colors.textSecondary,
+    marginBottom: currentTheme.spacing.lg,
+  },
+  detailsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
+  detailItem: {
+    width: '48%',
+    marginBottom: currentTheme.spacing.md,
+  },
+  detailLabel: {
+    fontSize: 12,
+    color: currentTheme.colors.textSecondary,
+    marginBottom: currentTheme.spacing.xs,
+  },
+  detailValue: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: currentTheme.colors.text,
+  },
 }); 
