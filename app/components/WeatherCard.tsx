@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, ScrollView } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { WeatherData, HourlyForecast } from '../types';
 import { lightTheme, darkTheme } from '../constants/theme';
 import { getWeatherCardStyles } from '../constants/styles';
@@ -33,55 +32,54 @@ export const WeatherCard: React.FC<WeatherCardProps> = ({
     };
 
     return (
-        <View style={styles.container}>
-            <LinearGradient
-                colors={[currentTheme.colors.surface, currentTheme.colors.background]}
-                style={styles.gradient}
-            >
-                <View style={styles.header}>
-                    <View style={styles.temperatureContainer}>
-                        <Text style={styles.temperature}>
-                            {formatTemperature(weather.temperature)}
-                        </Text>
-                        <Text style={styles.description}>
-                            {weather.weatherDescription}
-                        </Text>
-                    </View>
-                    <Text style={styles.weatherIcon}>
-                        {weather.weatherIcon}
+        <View style={[styles.gradient, { 
+            backgroundColor: currentTheme.colors.surface,
+            borderRadius: currentTheme.borderRadius.lg,
+            margin: currentTheme.spacing.md,
+        }]}>
+            <View style={styles.header}>
+                <View style={styles.temperatureContainer}>
+                    <Text style={styles.temperature}>
+                        {formatTemperature(weather.temperature)}
+                    </Text>
+                    <Text style={styles.description}>
+                        {weather.weatherDescription}
                     </Text>
                 </View>
+                <Text style={styles.weatherIcon}>
+                    {weather.weatherIcon}
+                </Text>
+            </View>
 
-                {hourlyForecast.length > 0 && (
-                    <View style={styles.hourlySection}>
-                        <Text style={styles.hourlyTitle}>Next 24 Hours</Text>
-                        <ScrollView 
-                            horizontal 
-                            showsHorizontalScrollIndicator={false}
-                            style={styles.hourlyScrollView}
-                        >
-                            {hourlyForecast.map((hour, index) => (
-                                <View key={index} style={styles.hourlyItem}>
-                                    <Text style={styles.hourlyTime}>
-                                        {formatHour(hour.time)}
+            {hourlyForecast.length > 0 && (
+                <View style={styles.hourlySection}>
+                    <Text style={styles.hourlyTitle}>Next 24 Hours</Text>
+                    <ScrollView 
+                        horizontal 
+                        showsHorizontalScrollIndicator={false}
+                        style={styles.hourlyScrollView}
+                    >
+                        {hourlyForecast.map((hour, index) => (
+                            <View key={index} style={styles.hourlyItem}>
+                                <Text style={styles.hourlyTime}>
+                                    {formatHour(hour.time)}
+                                </Text>
+                                <Text style={styles.hourlyIcon}>
+                                    {hour.weatherIcon}
+                                </Text>
+                                <Text style={styles.hourlyTemp}>
+                                    {formatTemperature(hour.temperature)}
+                                </Text>
+                                {hour.precipitationProbability > 0 && (
+                                    <Text style={styles.hourlyPrecipitation}>
+                                        {hour.precipitationProbability}%
                                     </Text>
-                                    <Text style={styles.hourlyIcon}>
-                                        {hour.weatherIcon}
-                                    </Text>
-                                    <Text style={styles.hourlyTemp}>
-                                        {formatTemperature(hour.temperature)}
-                                    </Text>
-                                    {hour.precipitationProbability > 0 && (
-                                        <Text style={styles.hourlyPrecipitation}>
-                                            {hour.precipitationProbability}%
-                                        </Text>
-                                    )}
-                                </View>
-                            ))}
-                        </ScrollView>
-                    </View>
-                )}
-            </LinearGradient>
+                                )}
+                            </View>
+                        ))}
+                    </ScrollView>
+                </View>
+            )}
         </View>
     );
 }; 

@@ -1,55 +1,55 @@
 import { AppTheme } from '../types/index';
 
 export const lightTheme: AppTheme = {
-  colors: {
-    primary: '#2563eb',
-    secondary: '#7c3aed',
-    background: '#ffffff',
-    surface: '#f8fafc',
-    text: '#1e293b',
-    textSecondary: '#64748b',
-    error: '#ef4444',
-    success: '#22c55e',
-    warning: '#f59e0b',
-    border: '#e2e8f0',
-  },
-  spacing: {
-    xs: 4,
-    sm: 8,
-    md: 16,
-    lg: 24,
-    xl: 32,
-  },
-  borderRadius: {
-    sm: 4,
-    md: 8,
-    lg: 12,
-  },
+    colors: {
+        primary: '#ffffff',
+        secondary: '#e2e8f0',
+        background: '#ffffff',
+        surface: 'rgba(255, 255, 255, 0.2)',
+        text: '#ffffff',
+        textSecondary: '#e2e8f0',
+        error: '#fecaca',
+        success: '#dcfce7',
+        warning: '#fef3c7',
+        border: 'rgba(255, 255, 255, 0.3)',
+    },
+    spacing: {
+        xs: 4,
+        sm: 8,
+        md: 16,
+        lg: 24,
+        xl: 32,
+    },
+    borderRadius: {
+        sm: 4,
+        md: 8,
+        lg: 12,
+    },
 };
 
 export const darkTheme: AppTheme = {
-  colors: {
-    primary: '#3b82f6',
-    secondary: '#8b5cf6',
-    background: '#0f172a',
-    surface: '#1e293b',
-    text: '#fff',
-    textSecondary: '#cfd8dc',
-    error: '#f87171',
-    success: '#4ade80',
-    warning: '#fbbf24',
-    border: '#334155',
-  },
-  spacing: {
-    xs: 4,
-    sm: 8,
-    md: 16,
-    lg: 24,
-    xl: 32,
-  },
-  borderRadius: {
-    sm: 4,
-    md: 8,
-    lg: 12,
-  },
+    colors: {
+        primary: '#3b82f6',
+        secondary: '#8b5cf6',
+        background: '#0f172a',
+        surface: '#1e293b',
+        text: '#fff',
+        textSecondary: '#cfd8dc',
+        error: '#f87171',
+        success: '#4ade80',
+        warning: '#fbbf24',
+        border: '#334155',
+    },
+    spacing: {
+        xs: 4,
+        sm: 8,
+        md: 16,
+        lg: 24,
+        xl: 32,
+    },
+    borderRadius: {
+        sm: 4,
+        md: 8,
+        lg: 12,
+    },
 }; 

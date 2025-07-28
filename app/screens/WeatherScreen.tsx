@@ -63,6 +63,81 @@ export const WeatherScreen: React.FC = () => {
                     const { city, region, country } = results[0];
                     let name = city || '';
                     if (region) name += (name ? ', ' : '') + region;
+                    
+                    // Convert common full names to abbreviations
+                    const abbreviations: { [key: string]: string } = {
+                        'Ontario': 'ON',
+                        'Quebec': 'QC',
+                        'British Columbia': 'BC',
+                        'Alberta': 'AB',
+                        'Manitoba': 'MB',
+                        'Saskatchewan': 'SK',
+                        'Nova Scotia': 'NS',
+                        'New Brunswick': 'NB',
+                        'Newfoundland and Labrador': 'NL',
+                        'Prince Edward Island': 'PE',
+                        'Northwest Territories': 'NT',
+                        'Nunavut': 'NU',
+                        'Yukon': 'YT',
+                        // US States
+                        'California': 'CA',
+                        'New York': 'NY',
+                        'Texas': 'TX',
+                        'Florida': 'FL',
+                        'Illinois': 'IL',
+                        'Pennsylvania': 'PA',
+                        'Ohio': 'OH',
+                        'Georgia': 'GA',
+                        'North Carolina': 'NC',
+                        'Michigan': 'MI',
+                        'New Jersey': 'NJ',
+                        'Virginia': 'VA',
+                        'Washington': 'WA',
+                        'Arizona': 'AZ',
+                        'Massachusetts': 'MA',
+                        'Tennessee': 'TN',
+                        'Indiana': 'IN',
+                        'Missouri': 'MO',
+                        'Maryland': 'MD',
+                        'Colorado': 'CO',
+                        'Wisconsin': 'WI',
+                        'Minnesota': 'MN',
+                        'South Carolina': 'SC',
+                        'Alabama': 'AL',
+                        'Louisiana': 'LA',
+                        'Kentucky': 'KY',
+                        'Oregon': 'OR',
+                        'Oklahoma': 'OK',
+                        'Connecticut': 'CT',
+                        'Utah': 'UT',
+                        'Iowa': 'IA',
+                        'Nevada': 'NV',
+                        'Arkansas': 'AR',
+                        'Mississippi': 'MS',
+                        'Kansas': 'KS',
+                        'New Mexico': 'NM',
+                        'Nebraska': 'NE',
+                        'West Virginia': 'WV',
+                        'Idaho': 'ID',
+                        'Hawaii': 'HI',
+                        'New Hampshire': 'NH',
+                        'Maine': 'ME',
+                        'Montana': 'MT',
+                        'Rhode Island': 'RI',
+                        'Delaware': 'DE',
+                        'South Dakota': 'SD',
+                        'North Dakota': 'ND',
+                        'Alaska': 'AK',
+                        'District of Columbia': 'DC',
+                        'Vermont': 'VT',
+                        'Wyoming': 'WY',
+                    };
+                    
+                    // Replace full names with abbreviations
+                    Object.entries(abbreviations).forEach(([fullName, abbrev]) => {
+                        name = name.replace(fullName, abbrev);
+                    });
+                    
                     setPlaceName(name);
                 }
             });
@@ -144,19 +219,9 @@ export const WeatherScreen: React.FC = () => {
                 <SafeAreaView style={styles.container}>
                     <View style={styles.header}>
                         <View>
-                            <Text style={styles.title}>Weather</Text>
-                            {location && (
-                                <View style={styles.locationContainer}>
-                                    <Ionicons
-                                        name="location"
-                                        size={16}
-                                        color={currentTheme.colors.textSecondary}
-                                    />
-                                    <Text style={styles.locationText}>
-                                        {placeName ? `${placeName}, ` : ''}({location.latitude.toFixed(4)}, {location.longitude.toFixed(4)})
-                                    </Text>
-                                </View>
-                            )}
+                            <Text style={styles.title}>
+                                {placeName || 'Weather'}
+                            </Text>
                         </View>
                         <TouchableOpacity onPress={refreshWeather}>
                             <Ionicons
@@ -237,19 +302,9 @@ export const WeatherScreen: React.FC = () => {
                 <SafeAreaView style={styles.container}>
                     <View style={styles.header}>
                         <View>
-                            <Text style={styles.title}>Weather</Text>
-                            {location && (
-                                <View style={styles.locationContainer}>
-                                    <Ionicons
-                                        name="location"
-                                        size={16}
-                                        color={currentTheme.colors.textSecondary}
-                                    />
-                                    <Text style={styles.locationText}>
-                                        {placeName ? `${placeName}, ` : ''}({location.latitude.toFixed(4)}, {location.longitude.toFixed(4)})
-                                    </Text>
-                                </View>
-                            )}
+                            <Text style={styles.title}>
+                                {placeName || 'Weather'}
+                            </Text>
                         </View>
                         <TouchableOpacity onPress={refreshWeather}>
                             <Ionicons
