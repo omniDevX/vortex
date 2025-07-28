@@ -176,7 +176,7 @@ export const getSettingsScreenStyles = (currentTheme: any) => StyleSheet.create(
         fontWeight: '600',
     },
     unitButtonTextActive: {
-        color: '#fff',
+        color: currentTheme.colors.primary === '#ffffff' ? '#000000' : '#fff',
     },
     unitButtonTextInactive: {
         color: currentTheme.colors.textSecondary,

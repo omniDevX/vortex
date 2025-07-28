@@ -11,6 +11,7 @@ import { useWeather } from '../hooks/useWeather';
 import { getWeatherScreenStyles } from '../constants/styles';
 import { useSettings } from '../contexts/SettingsContext';
 import { useWeatherContext } from '../contexts/WeatherContext';
+import { useBackground } from '../contexts/BackgroundContext';
 
 export const WeatherScreen: React.FC = () => {
     const colorScheme = useColorScheme();
@@ -20,6 +21,7 @@ export const WeatherScreen: React.FC = () => {
     const [placeName, setPlaceName] = useState<string | null>(null);
 
     const { setLocation, setWeather } = useWeatherContext();
+    const { setCurrentBackgroundUrl } = useBackground();
 
     const {
         currentWeather,
@@ -34,6 +36,35 @@ export const WeatherScreen: React.FC = () => {
 
     const [refreshing, setRefreshing] = useState(false);
 
+    // Function to change background image
+    const changeBackgroundImage = async () => {
+        try {
+            const response = await fetch('https://api.github.com/repos/silkbeauty/ssart/contents/zzz');
+            
+            if (!response.ok) {
+                throw new Error('Failed to fetch images from GitHub');
+            }
+
+            const files = await response.json();
+            
+            // Filter for image files and get their download URLs
+            const imageFiles = files.filter((file: any) =>
+                file.type === 'file' &&
+                /\.(jpg|jpeg|png|gif|webp)$/i.test(file.name)
+            );
+
+            const imageUrls = imageFiles.map((file: any) => file.download_url);
+            
+            if (imageUrls.length > 0) {
+                // Pick a random image
+                const randomIndex = Math.floor(Math.random() * imageUrls.length);
+                setCurrentBackgroundUrl(imageUrls[randomIndex]);
+            }
+        } catch (error) {
+            console.error('Error changing background image:', error);
+        }
+    };
+
     const onRefresh = async () => {
         setRefreshing(true);
         try {
@@ -43,6 +74,12 @@ export const WeatherScreen: React.FC = () => {
         } finally {
             setRefreshing(false);
         }
+    };
+
+    // Combined refresh function that updates both weather and background
+    const handleRefresh = async () => {
+        await refreshWeather();
+        await changeBackgroundImage();
     };
 
     useEffect(() => {
@@ -223,7 +260,7 @@ export const WeatherScreen: React.FC = () => {
                                 {placeName || 'Weather'}
                             </Text>
                         </View>
-                        <TouchableOpacity onPress={refreshWeather}>
+                        <TouchableOpacity onPress={handleRefresh}>
                             <Ionicons
                                 name="refresh"
                                 size={24}
@@ -306,7 +343,7 @@ export const WeatherScreen: React.FC = () => {
                                 {placeName || 'Weather'}
                             </Text>
                         </View>
-                        <TouchableOpacity onPress={refreshWeather}>
+                        <TouchableOpacity onPress={handleRefresh}>
                             <Ionicons
                                 name="refresh"
                                 size={24}

@@ -25,7 +25,7 @@ export const DynamicBackground: React.FC<DynamicBackgroundProps> = ({
   const theme = colorScheme === 'dark' ? 'dark' : 'light';
   const currentTheme = theme === 'dark' ? darkTheme : lightTheme;
   const { settings } = useSettings();
-  const { setCurrentBackgroundUrl } = useBackground();
+  const { currentBackgroundUrl, setCurrentBackgroundUrl } = useBackground();
 
     const [backgroundImages, setBackgroundImages] = useState<string[]>([]);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -63,7 +63,9 @@ export const DynamicBackground: React.FC<DynamicBackgroundProps> = ({
         } catch (error) {
             console.error('Error fetching background images:', error);
             // Fallback to a default background
-            setBackgroundImages(['https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800']);
+            const fallbackUrl = 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800';
+            setBackgroundImages([fallbackUrl]);
+            setCurrentBackgroundUrl(fallbackUrl);
         } finally {
             setIsLoading(false);
         }
@@ -108,6 +110,18 @@ export const DynamicBackground: React.FC<DynamicBackgroundProps> = ({
         fetchBackgroundImages();
     }, []);
 
+    // Trigger fade animation when background URL changes
+    useEffect(() => {
+        if (currentBackgroundUrl) {
+            fadeAnim.setValue(0);
+            Animated.timing(fadeAnim, {
+                toValue: 1,
+                duration: 1000,
+                useNativeDriver: true,
+            }).start();
+        }
+    }, [currentBackgroundUrl]);
+
     const styles = StyleSheet.create({
         container: {
             flex: 1,
@@ -134,7 +148,7 @@ export const DynamicBackground: React.FC<DynamicBackgroundProps> = ({
     });
 
     // Show loading state or fallback
-    if (isLoading || backgroundImages.length === 0) {
+    if (isLoading || !currentBackgroundUrl) {
         return (
             <View style={[styles.container, { backgroundColor: currentTheme.colors.background }]}>
                 <View style={styles.content}>
@@ -148,7 +162,7 @@ export const DynamicBackground: React.FC<DynamicBackgroundProps> = ({
         <View style={styles.container}>
             <Animated.View style={[styles.background, { opacity: fadeAnim }]}>
                 <ImageBackground
-                    source={{ uri: backgroundImages[currentImageIndex] }}
+                    source={{ uri: currentBackgroundUrl }}
                     style={styles.background}
                     resizeMode="cover"
                 >
