@@ -11,6 +11,7 @@ import { darkTheme, lightTheme } from './app/constants/theme';
 import { WeatherScreen } from './app/screens/WeatherScreen';
 import { SettingsScreen } from './app/screens/SettingsScreen';
 import { SettingsProvider } from './app/contexts/SettingsContext';
+import { BackgroundProvider } from './app/contexts/BackgroundContext';
 import { CaptureStormScreen } from './app/screens/CaptureStormScreen';
 import { StormListScreen } from './app/screens/StormListScreen';
 import { StormDetailScreen } from './app/screens/StormDetailScreen';
@@ -85,12 +86,14 @@ export default function App() {
     return (
         <WeatherProvider>
             <SettingsProvider>
-                <SafeAreaProvider>
-                    <NavigationContainer>
-                        <StatusBar barStyle={theme === 'dark' ? 'light-content' : 'dark-content'} />
-                        <TabNavigator />
-                    </NavigationContainer>
-                </SafeAreaProvider>
+                <BackgroundProvider>
+                    <SafeAreaProvider>
+                        <NavigationContainer>
+                            <StatusBar barStyle={theme === 'dark' ? 'light-content' : 'dark-content'} />
+                            <TabNavigator />
+                        </NavigationContainer>
+                    </SafeAreaProvider>
+                </BackgroundProvider>
             </SettingsProvider>
         </WeatherProvider>
     );

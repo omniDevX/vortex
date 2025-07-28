@@ -107,7 +107,6 @@ export const getWeatherScreenStyles = (currentTheme: any) => StyleSheet.create({
 export const getSettingsScreenStyles = (currentTheme: any) => StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: currentTheme.colors.background,
     },
     header: {
         flexDirection: 'row',
@@ -202,7 +201,6 @@ export const getSettingsScreenStyles = (currentTheme: any) => StyleSheet.create(
 export const getStormListScreenStyles = (currentTheme: any) => StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: currentTheme.colors.background,
     },
     header: {
         flexDirection: 'row',
@@ -309,7 +307,6 @@ export const getStormListScreenStyles = (currentTheme: any) => StyleSheet.create
 export const getStormDetailScreenStyles = (currentTheme: any) => StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: currentTheme.colors.background,
     },
     header: {
         flexDirection: 'row',
@@ -756,10 +753,6 @@ export const getWeatherCardStyles = (currentTheme: any) => StyleSheet.create({
         fontSize: 9,
         color: currentTheme.colors.textSecondary,
         marginTop: 2,
-    },
-    // Grid layout styles for hourly forecast
-    hourlyGrid: {
-        marginTop: currentTheme.spacing.sm,
     },
     hourlyGridRow: {
         flexDirection: 'row',

@@ -1,9 +1,10 @@
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
-import { Alert, ScrollView, Switch, Text, TouchableOpacity, useColorScheme, View } from 'react-native';
+import { Alert, ScrollView, Switch, Text, TouchableOpacity, useColorScheme, View, ImageBackground } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { darkTheme, lightTheme } from '../constants/theme';
 import { useSettings } from '../contexts/SettingsContext';
+import { useBackground } from '../contexts/BackgroundContext';
 import { getSettingsScreenStyles } from '../constants/styles';
 
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
@@ -19,6 +20,7 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = ({ navigation }) =>
     const theme = colorScheme === 'dark' ? 'dark' : 'light';
     const currentTheme = theme === 'dark' ? darkTheme : lightTheme;
     const { settings, updateSetting } = useSettings();
+    const { currentBackgroundUrl } = useBackground();
 
     const clearData = () => {
         Alert.alert(
@@ -45,7 +47,22 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = ({ navigation }) =>
     const styles = getSettingsScreenStyles(currentTheme);
 
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={{ flex: 1 }}>
+            {currentBackgroundUrl ? (
+                <ImageBackground
+                    source={{ uri: currentBackgroundUrl }}
+                    style={{ flex: 1 }}
+                    resizeMode="cover"
+                >
+                    <View style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        backgroundColor: 'rgba(0, 0, 0, 0.3)', // Dark overlay for better text readability
+                    }} />
+                    <SafeAreaView style={styles.container}>
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Ionicons
@@ -176,5 +193,140 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = ({ navigation }) =>
                 </View>
             </ScrollView>
         </SafeAreaView>
+                </ImageBackground>
+            ) : (
+                <SafeAreaView style={styles.container}>
+                    <View style={styles.header}>
+                        <TouchableOpacity onPress={() => navigation.goBack()}>
+                            <Ionicons
+                                name="arrow-back"
+                                size={24}
+                                color={currentTheme.colors.text}
+                            />
+                        </TouchableOpacity>
+                        <Text style={styles.title}>Settings</Text>
+                    </View>
+
+                    <ScrollView style={styles.content}>
+                        <View style={styles.section}>
+                            <Text style={styles.sectionTitle}>Display</Text>
+
+                            <View style={styles.settingItem}>
+                                <View style={styles.settingInfo}>
+                                    <Text style={styles.settingTitle}>Dynamic Background</Text>
+                                    <Text style={styles.settingDescription}>
+                                        Change app background based on current weather conditions
+                                    </Text>
+                                </View>
+                                <Switch
+                                    value={settings.dynamicBackground}
+                                    onValueChange={(value) => updateSetting('dynamicBackground', value)}
+                                    trackColor={{
+                                        false: currentTheme.colors.border,
+                                        true: currentTheme.colors.primary
+                                    }}
+                                    thumbColor={settings.dynamicBackground ? '#fff' : currentTheme.colors.textSecondary}
+                                />
+                            </View>
+
+                            <View style={styles.settingItem}>
+                                <View style={styles.settingInfo}>
+                                    <Text style={styles.settingTitle}>Units</Text>
+                                    <Text style={styles.settingDescription}>
+                                        Choose temperature and measurement units
+                                    </Text>
+                                </View>
+                                <View style={styles.unitsContainer}>
+                                    <TouchableOpacity
+                                        style={[
+                                            styles.unitButton,
+                                            settings.units === 'metric'
+                                                ? styles.unitButtonActive
+                                                : styles.unitButtonInactive
+                                        ]}
+                                        onPress={() => updateSetting('units', 'metric')}
+                                    >
+                                        <Text style={[
+                                            styles.unitButtonText,
+                                            settings.units === 'metric'
+                                                ? styles.unitButtonTextActive
+                                                : styles.unitButtonTextInactive
+                                        ]}>
+                                            Metric
+                                        </Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity
+                                        style={[
+                                            styles.unitButton,
+                                            settings.units === 'imperial'
+                                                ? styles.unitButtonActive
+                                                : styles.unitButtonInactive
+                                        ]}
+                                        onPress={() => updateSetting('units', 'imperial')}
+                                    >
+                                        <Text style={[
+                                            styles.unitButtonText,
+                                            settings.units === 'imperial'
+                                                ? styles.unitButtonTextActive
+                                                : styles.unitButtonTextInactive
+                                        ]}>
+                                            Imperial
+                                        </Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        </View>
+
+                        <View style={styles.section}>
+                            <Text style={styles.sectionTitle}>Data & Updates</Text>
+
+                            <View style={styles.settingItem}>
+                                <View style={styles.settingInfo}>
+                                    <Text style={styles.settingTitle}>Auto Refresh</Text>
+                                    <Text style={styles.settingDescription}>
+                                        Automatically update weather data every 30 minutes
+                                    </Text>
+                                </View>
+                                <Switch
+                                    value={settings.autoRefresh}
+                                    onValueChange={(value) => updateSetting('autoRefresh', value)}
+                                    trackColor={{
+                                        false: currentTheme.colors.border,
+                                        true: currentTheme.colors.primary
+                                    }}
+                                    thumbColor={settings.autoRefresh ? '#fff' : currentTheme.colors.textSecondary}
+                                />
+                            </View>
+
+                            <View style={styles.settingItem}>
+                                <View style={styles.settingInfo}>
+                                    <Text style={styles.settingTitle}>Notifications</Text>
+                                    <Text style={styles.settingDescription}>
+                                        Receive alerts for severe weather conditions
+                                    </Text>
+                                </View>
+                                <Switch
+                                    value={settings.notifications}
+                                    onValueChange={(value) => updateSetting('notifications', value)}
+                                    trackColor={{
+                                        false: currentTheme.colors.border,
+                                        true: currentTheme.colors.primary
+                                    }}
+                                    thumbColor={settings.notifications ? '#fff' : currentTheme.colors.textSecondary}
+                                />
+                            </View>
+                        </View>
+
+                        <View style={styles.dangerSection}>
+                            <Text style={styles.sectionTitle}>Data Management</Text>
+
+                            <TouchableOpacity style={styles.dangerButton} onPress={clearData}>
+                                <Text style={styles.dangerButtonText}>Clear All Data</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </ScrollView>
+                </SafeAreaView>
+            )}
+        </View>
     );
 }; 
