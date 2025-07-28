@@ -739,23 +739,55 @@ export const getWeatherCardStyles = (currentTheme: any) => StyleSheet.create({
         marginTop: currentTheme.spacing.xs,
     },
     hourlyTime: {
-        fontSize: 12,
+        fontSize: 11,
         color: currentTheme.colors.textSecondary,
-        marginBottom: currentTheme.spacing.xs,
+        marginBottom: 2,
     },
     hourlyIcon: {
-        fontSize: 20,
-        marginBottom: currentTheme.spacing.xs,
+        fontSize: 16,
+        marginBottom: 2,
     },
     hourlyTemp: {
-        fontSize: 14,
+        fontSize: 12,
         fontWeight: '600',
         color: currentTheme.colors.text,
     },
     hourlyPrecipitation: {
-        fontSize: 10,
+        fontSize: 9,
         color: currentTheme.colors.textSecondary,
-        marginTop: currentTheme.spacing.xs,
+        marginTop: 2,
+    },
+    // Grid layout styles for hourly forecast
+    hourlyGrid: {
+        marginTop: currentTheme.spacing.sm,
+    },
+    hourlyGridRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: currentTheme.spacing.xs,
+        paddingVertical: currentTheme.spacing.xs,
+        borderRadius: currentTheme.borderRadius.sm,
+    },
+    hourlyGridRowMorning: {
+        backgroundColor: 'rgba(255, 193, 7, 0.1)',
+        borderLeftWidth: 3,
+        borderLeftColor: '#FFC107',
+    },
+    hourlyGridRowAfternoon: {
+        backgroundColor: 'rgba(255, 152, 0, 0.1)',
+        borderLeftWidth: 3,
+        borderLeftColor: '#FF9800',
+    },
+    hourlyGridRowEvening: {
+        backgroundColor: 'rgba(156, 39, 176, 0.1)',
+        borderLeftWidth: 3,
+        borderLeftColor: '#9C27B0',
+    },
+    hourlyGridItem: {
+        width: '12%',
+        alignItems: 'center',
+        paddingVertical: 1,
+        paddingHorizontal: 1,
     },
     // Timeline view styles
     hourlyTimeline: {
