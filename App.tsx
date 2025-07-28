@@ -55,11 +55,16 @@ const TabNavigator = () => {
 
                     return <Ionicons name={iconName} size={size} color={color} />;
                 },
-                tabBarActiveTintColor: currentTheme.colors.primary,
-                tabBarInactiveTintColor: currentTheme.colors.textSecondary,
+                tabBarActiveTintColor: '#1e293b',
+                tabBarInactiveTintColor: '#64748b',
                 tabBarStyle: {
-                    backgroundColor: currentTheme.colors.surface,
-                    borderTopColor: currentTheme.colors.border,
+                    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                    borderTopColor: 'rgba(255, 255, 255, 0.3)',
+                    borderTopWidth: 1,
+                    elevation: 0,
+                    shadowOpacity: 0,
+                    shadowRadius: 0,
+                    shadowOffset: { width: 0, height: 0 },
                 },
                 headerShown: false,
             })}
