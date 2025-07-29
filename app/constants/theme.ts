@@ -32,7 +32,7 @@ export const darkTheme: AppTheme = {
         primary: '#3b82f6',
         secondary: '#8b5cf6',
         background: '#0f172a',
-        surface: '#1e293b',
+        surface: 'rgba(255, 255, 255, 0.2)',
         text: '#fff',
         textSecondary: '#cfd8dc',
         error: '#f87171',
