@@ -71,7 +71,7 @@ const TabNavigator = () => {
             })}
         >
             <Tab.Screen name="Weather" component={WeatherScreen} options={{ title: 'Weather' }} />
-            <Tab.Screen name="Storms" component={StormStack} options={{ title: 'Storm Documentation' }} />
+            <Tab.Screen name="Storms" component={StormStack} options={{ title: 'Nota' }} />
             <Tab.Screen name="Settings" component={SettingsScreen} options={{ title: 'Settings' }} />
 
         </Tab.Navigator>

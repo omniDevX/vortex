@@ -573,6 +573,8 @@ export const getCaptureStormScreenStyles = (currentTheme: any) => StyleSheet.cre
         color: '#fff',
         fontSize: 18,
         fontWeight: 'bold',
+        width: '100%',
+        textAlign: 'center',
     },
     loadingOverlay: {
         position: 'absolute',

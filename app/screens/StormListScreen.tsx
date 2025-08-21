@@ -98,7 +98,7 @@ export const StormListScreen: React.FC<StormListScreenProps> = ({ navigation }) 
                         }} />
                         <SafeAreaView style={styles.container}>
                             <View style={styles.loadingContainer}>
-                                <Text style={styles.loadingText}>Loading storm data...</Text>
+                                <Text style={styles.loadingText}>Loading  data...</Text>
                             </View>
                         </SafeAreaView>
                     </ImageBackground>
@@ -171,7 +171,7 @@ export const StormListScreen: React.FC<StormListScreenProps> = ({ navigation }) 
                     }} />
                     <SafeAreaView style={styles.container}>
             <View style={styles.header}>
-                <Text style={styles.title}>Storm Documentation</Text>
+                <Text style={styles.title}>Nota</Text>
                 <TouchableOpacity
                     style={[styles.addButton, { 
                         backgroundColor: 'rgba(34, 197, 94, 0.9)',
@@ -195,34 +195,13 @@ export const StormListScreen: React.FC<StormListScreenProps> = ({ navigation }) 
                 refreshControl={
                     <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
                 }
-                ListHeaderComponent={
-                    storms.length > 0 ? (
-                        <View style={styles.statsContainer}>
-                            <View style={styles.statItem}>
-                                <Text style={styles.statNumber}>{storms.length}</Text>
-                                <Text style={styles.statLabel}>Total Storms</Text>
-                            </View>
-                            <View style={styles.statItem}>
-                                <Text style={styles.statNumber}>
-                                    {storms.filter(s => s.stormType === 'Thunderstorm').length}
-                                </Text>
-                                <Text style={styles.statLabel}>Thunderstorms</Text>
-                            </View>
-                            <View style={styles.statItem}>
-                                <Text style={styles.statNumber}>
-                                    {new Set(storms.map(s => new Date(s.dateTime).toDateString())).size}
-                                </Text>
-                                <Text style={styles.statLabel}>Days Active</Text>
-                            </View>
-                        </View>
-                    ) : null
-                }
+                
                 ListEmptyComponent={
                     <View style={styles.emptyContainer}>
                         <Text style={styles.emptyIcon}>🌩️</Text>
-                        <Text style={styles.emptyText}>No storm documentation yet</Text>
+                        <Text style={styles.emptyText}>No moments yet</Text>
                         <Text style={styles.emptySubtext}>
-                            Tap the + button to capture your first storm
+                            Tap the + button to capture your first moment
                         </Text>
                     </View>
                 }
@@ -232,7 +211,7 @@ export const StormListScreen: React.FC<StormListScreenProps> = ({ navigation }) 
             ) : (
                 <SafeAreaView style={styles.container}>
                     <View style={styles.header}>
-                        <Text style={styles.title}>Storm Documentation</Text>
+                        <Text style={styles.title}>Documentation</Text>
                         <TouchableOpacity
                             style={styles.addButton}
                             onPress={() => navigation.navigate('CaptureStorm')}
@@ -249,28 +228,7 @@ export const StormListScreen: React.FC<StormListScreenProps> = ({ navigation }) 
                         refreshControl={
                             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
                         }
-                        ListHeaderComponent={
-                            storms.length > 0 ? (
-                                <View style={styles.statsContainer}>
-                                    <View style={styles.statItem}>
-                                        <Text style={styles.statNumber}>{storms.length}</Text>
-                                        <Text style={styles.statLabel}>Total Storms</Text>
-                                    </View>
-                                    <View style={styles.statItem}>
-                                        <Text style={styles.statNumber}>
-                                            {storms.filter(s => s.stormType === 'Thunderstorm').length}
-                                        </Text>
-                                        <Text style={styles.statLabel}>Thunderstorms</Text>
-                                    </View>
-                                    <View style={styles.statItem}>
-                                        <Text style={styles.statNumber}>
-                                            {new Set(storms.map(s => new Date(s.dateTime).toDateString())).size}
-                                        </Text>
-                                        <Text style={styles.statLabel}>Days Active</Text>
-                                    </View>
-                                </View>
-                            ) : null
-                        }
+                        
                         ListEmptyComponent={
                             <View style={styles.emptyContainer}>
                                 <Text style={styles.emptyIcon}>🌩️</Text>

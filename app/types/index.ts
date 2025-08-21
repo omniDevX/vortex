@@ -21,7 +21,7 @@ export interface Location {
 
 export interface StormDocumentation {
     id: string;
-    photoUri: string;
+    photoUri: string| null;
     weatherConditions: WeatherData;
     location: Location;
     dateTime: string;
@@ -32,13 +32,13 @@ export interface StormDocumentation {
 }
 
 export enum StormType {
-    THUNDERSTORM = 'Thunderstorm',
-    TORNADO = 'Tornado',
-    HURRICANE = 'Hurricane',
-    BLIZZARD = 'Blizzard',
-    DUST_STORM = 'Dust Storm',
-    HAIL_STORM = 'Hail Storm',
-    OTHER = 'Other'
+    THUNDERSTORM = '😊Mood',
+    TORNADO = '🩺Health',
+    HURRICANE = '📚Study',
+    BLIZZARD = '📝Plans',
+    DUST_STORM = '💡Insights',
+    HAIL_STORM = '📈Gains',
+    OTHER = '🤝Other'
 }
 
 export interface WeatherForecast {

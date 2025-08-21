@@ -71,15 +71,13 @@ export const CaptureStormScreen: React.FC<CaptureStormScreenProps> = ({ navigati
 
     const handleSave = async () => {
         if (!photoUri) {
-            Alert.alert('Error', 'Please take or select a photo first');
+            Alert.alert('Error', 'Please take or select a photo before saving.');
             return;
         }
 
-        if (!currentWeather || !currentLocation) {
-            Alert.alert('Error', 'Weather and location data not available');
-            return;
-        }
-
+        console.log('Saving storm documentation:', {
+            photoUri,
+        });
         try {
             setLoading(true);
 
@@ -96,9 +94,7 @@ export const CaptureStormScreen: React.FC<CaptureStormScreenProps> = ({ navigati
             };
 
             await addStorm(storm);
-            Alert.alert('Success', 'Storm documentation saved successfully!', [
-                { text: 'OK', onPress: () => navigation.goBack() }
-            ]);
+            navigation.goBack()
         } catch (error) {
             Alert.alert('Error', 'Failed to save storm documentation');
         } finally {
@@ -125,7 +121,7 @@ export const CaptureStormScreen: React.FC<CaptureStormScreenProps> = ({ navigati
             
             <SafeAreaView style={{ flex: 1 }}>
                 <View style={styles.header}>
-                    <Text style={styles.title}>Capture Storm</Text>
+                    <Text style={styles.title}>Capture Moment</Text>
                     <TouchableOpacity onPress={() => navigation.goBack()}>
                         <Text style={styles.cancelButton}>Cancel</Text>
                     </TouchableOpacity>
@@ -133,7 +129,7 @@ export const CaptureStormScreen: React.FC<CaptureStormScreenProps> = ({ navigati
 
             <ScrollView style={styles.content}>
                 <View style={styles.photoSection}>
-                    <Text style={styles.sectionTitle}>Photo</Text>
+                    
                     <View style={styles.photoContainer}>
                         {photoUri ? (
                             <Image source={{ uri: photoUri }} style={styles.photo} />
@@ -163,7 +159,7 @@ export const CaptureStormScreen: React.FC<CaptureStormScreenProps> = ({ navigati
                 </View>
 
                 <View style={styles.formSection}>
-                    <Text style={styles.sectionTitle}>Storm Details</Text>
+                    
                     <View style={styles.pickerContainer}>
                         <Picker
                             selectedValue={stormType}
@@ -178,53 +174,25 @@ export const CaptureStormScreen: React.FC<CaptureStormScreenProps> = ({ navigati
                     <View style={styles.inputContainer}>
                         <TextInput
                             style={styles.textInput}
-                            placeholder="Add notes about the storm..."
+                            placeholder="Add notes..."
                             placeholderTextColor={currentTheme.colors.textSecondary}
                             value={notes}
                             onChangeText={setNotes}
                             multiline
-                            numberOfLines={4}
+                            numberOfLines={6}
                         />
                     </View>
                 </View>
 
-                {currentWeather && (
-                    <View style={styles.weatherInfo}>
-                        <Text style={styles.sectionTitle}>Current Weather</Text>
-                        <View style={styles.weatherRow}>
-                            <Text style={styles.weatherLabel}>Temperature:</Text>
-                            <Text style={styles.weatherValue}>
-                                {currentWeather.temperature.toFixed(1)}°C
-                            </Text>
-                        </View>
-                        <View style={styles.weatherRow}>
-                            <Text style={styles.weatherLabel}>Conditions:</Text>
-                            <Text style={styles.weatherValue}>
-                                {currentWeather.weatherDescription}
-                            </Text>
-                        </View>
-                        <View style={styles.weatherRow}>
-                            <Text style={styles.weatherLabel}>Wind Speed:</Text>
-                            <Text style={styles.weatherValue}>
-                                {currentWeather.windSpeed.toFixed(1)} km/h
-                            </Text>
-                        </View>
-                        <View style={styles.weatherRow}>
-                            <Text style={styles.weatherLabel}>Humidity:</Text>
-                            <Text style={styles.weatherValue}>
-                                {currentWeather.humidity.toFixed(0)}%
-                            </Text>
-                        </View>
-                    </View>
-                )}
+                
 
                 <TouchableOpacity
                     style={[styles.saveButton, { 
                         backgroundColor: 'rgba(34, 197, 94, 0.9)',
-                        marginBottom: 20
+                        marginBottom: 250
                     }]}
                     onPress={handleSave}
-                    disabled={loading || !photoUri}
+                    disabled={loading }
                 >
                     <Text style={[styles.saveButtonText, { color: '#fff' }]}>
                         {loading ? 'Saving...' : 'Save Storm Documentation'}
