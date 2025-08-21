@@ -32,48 +32,56 @@ export const WeatherCard: React.FC<WeatherCardProps> = ({
     };
 
     const renderHourlyGrid = () => {
-    // Pick top 3 hottest and bottom 3 coldest hours
-    const sorted = [...hourlyForecast].sort((a, b) => b.temperature - a.temperature);
-    const top3 = sorted.slice(0, 3);
-    const bottom3 = sorted.slice(-3);
-    const selected = [...top3, ...bottom3].sort(
-        (a, b) => new Date(a.time).getTime() - new Date(b.time).getTime()
-    );
-
-    return (
-        <View style={styles.hourlyGridRow}>
-            {selected.map((hour, idx) => {
-                let marker = '';
-                if (top3.includes(hour)) {
-                    marker = '🔥';
-                } else if (bottom3.includes(hour)) {
-                    marker = '🧊';
+        const rows = [];
+        
+        for (let row = 0; row < 3; row++) {
+            const rowItems = [];
+            
+            for (let col = 0; col < 8; col++) {
+                const hourIndex = row * 8 + col;
+                const hour = hourlyForecast[hourIndex];
+                
+                if (hour) {
+                    rowItems.push(
+                        <View key={`${row}-${col}`} style={styles.hourlyGridItem}>
+                            <Text style={styles.hourlyTime}>
+                                {formatHour(hour.time)}
+                            </Text>
+                            <Text style={styles.hourlyIcon}>
+                                {hour.weatherIcon}
+                            </Text>
+                            <Text style={styles.hourlyTemp}>
+                                {formatTemperature(hour.temperature)}
+                            </Text>
+                            {hour.precipitationProbability > 0 && (
+                                <Text style={styles.hourlyPrecipitation}>
+                                    {hour.precipitationProbability}%
+                                </Text>
+                            )}
+                        </View>
+                    );
                 }
-
-                return (
-                    <View key={idx} style={styles.hourlyGridItem}>
-                        <Text style={styles.hourlyTime}>{formatHour(hour.time)}</Text>
-                        <Text style={styles.hourlyIcon}>{hour.weatherIcon}</Text>
-                        <Text style={styles.hourlyTemp}>
-                            {formatTemperature(hour.temperature)}
-                        </Text>
-                        {hour.precipitationProbability > 0 && (
-                            <Text style={styles.hourlyPrecipitation}>
-                                {hour.precipitationProbability}%
-                            </Text>
-                        )}
-                        {marker !== '' && (
-                            <Text style={{ textAlign: 'center', marginTop: 2 }}>
-                                {marker}
-                            </Text>
-                        )}
-                    </View>
-                );
-            })}
-        </View>
-    );
-};
-
+            }
+            
+            // Apply different styles based on the row (time of day)
+            let rowStyle: any = styles.hourlyGridRow;
+            if (row === 0) {
+                rowStyle = [styles.hourlyGridRow, styles.hourlyGridRowMorning];
+            } else if (row === 1) {
+                rowStyle = [styles.hourlyGridRow, styles.hourlyGridRowAfternoon];
+            } else {
+                rowStyle = [styles.hourlyGridRow, styles.hourlyGridRowEvening];
+            }
+            
+            rows.push(
+                <View key={row} style={rowStyle}>
+                    {rowItems}
+                </View>
+            );
+        }
+        
+        return rows;
+    };
 
     return (
         <View style={[styles.gradient, { 

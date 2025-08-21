@@ -181,6 +181,7 @@ export const WeatherScreen: React.FC = () => {
         }
     }, [location]);
 
+    // console.log('Rendering WeatherScreen with location:', currentTheme)
     const styles = getWeatherScreenStyles(currentTheme);
 
     if (loading && !currentWeather) {
