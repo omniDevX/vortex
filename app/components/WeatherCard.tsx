@@ -57,7 +57,7 @@ export const WeatherCard: React.FC<WeatherCardProps> = ({
                         <Text style={styles.hourlyTemp}>
                             {formatTemperature(hour.temperature)}
                         </Text>
-                        {hour.precipitationProbability > 0 && (
+                        {(
                             <Text style={styles.hourlyPrecipitation}>
                                 {hour.precipitationProbability}%
                             </Text>
