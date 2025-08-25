@@ -32,10 +32,10 @@ export interface StormDocumentation {
 }
 
 export enum StormType {
-    THUNDERSTORM = '😊Mood',
+    THUNDERSTORM = '📌Todo',
+    BLIZZARD = '📝Plans',
     TORNADO = '🩺Health',
     HURRICANE = '📚Study',
-    BLIZZARD = '📝Plans',
     DUST_STORM = '💡Insights',
     HAIL_STORM = '📈Gains',
     OTHER = '🤝Other'

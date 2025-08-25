@@ -135,11 +135,6 @@ export const StormCard: React.FC<StormCardProps> = ({
                                 {getStormTypeIcon(storm.stormType)}
                             </Text>
                         </View>
-
-                        <Text style={styles.date}>
-                            {formatDate(storm.dateTime)}
-                        </Text>
-
                         
                     </View>
 
