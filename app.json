@@ -2,7 +2,7 @@
   "expo": {
     "name": "ClimaNota",
     "slug": "storm-chaser",
-    "version": "2.53.35.821",
+    "version": "2.53.35.825",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "scheme": "stormchaser",
