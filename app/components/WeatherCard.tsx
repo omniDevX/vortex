@@ -104,7 +104,9 @@ export const WeatherCard: React.FC<WeatherCardProps> = ({
                                 {formatTemperature(hour.temperature)}
                             </Text>
                             <Text style={styles.hourlyPrecipitation}>
-                                {Math.round(hour.precipitationProbability * 100)}%
+                                {/* {Math.round(hour.precipitationProbability * 100)}%
+                                {hour.precipitationProbability}% */}
+                                {Math.round(hour.precipitationProbability)}%
                             </Text>
                             {marker !== '' && (
                                 <Text style={{ textAlign: 'center', marginTop: 2 }}>
